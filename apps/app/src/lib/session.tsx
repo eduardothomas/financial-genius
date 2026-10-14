@@ -43,7 +43,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [email, setEmail] = useState<string | null>(() => readStored());
   const [goalId, setGoalId] = useState<string | null>(null);
   const api = useMemo(
-    () => createApiClient({ baseUrl: API_URL, auth: () => (email ? { 'x-dev-user': email } : {}) }),
+    () => createApiClient({ baseUrl: API_URL, auth: (): Record<string, string> => (email ? { 'x-dev-user': email } : {}) }),
     [email],
   );
   const value: Session = {
