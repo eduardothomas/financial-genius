@@ -1,5 +1,5 @@
-import type { GoalRecipe } from './config';
-import type { GoalType, Product } from './types';
+import type { GoalRecipe } from './config.js';
+import type { GoalType, Product } from './types.js';
 
 /** Resumen del mercado para un tipo de meta, derivado del catálogo. */
 export interface MarketContext {

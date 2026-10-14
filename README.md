@@ -34,18 +34,28 @@ Las reglas para Claude Code están en `CLAUDE.md`.
 ## Estado
 
 - [x] Monorepo (pnpm + Turborepo)
-- [x] `packages/engine`: cálculos, índice de preparación y ranking, 28 tests
-- [ ] `packages/db` + `apps/admin`
+- [x] `packages/engine` — cálculos, índice de preparación y ranking (28 tests)
+- [x] `packages/db` — esquema PostgreSQL, semilla, flujo propuesta → aprobación (9 tests SQL + prueba con el motor)
+- [x] `packages/catalog` — extracción con IA, citas anti-alucinación, validación, comparación (16 tests)
+- [x] `apps/admin` — panel del catálogo; lógica probada contra PostgreSQL (6 tests), pantallas Next.js sin ejecutar aún
 - [ ] `services/api`
 - [ ] `apps/app`
 - [ ] Chat
 
 ## Primeros pasos
 
+Necesitas Node 22+, pnpm y PostgreSQL 16 (por ejemplo `brew install postgresql@16`).
+
 ```bash
 pnpm install
-pnpm test
+createdb fg && export DATABASE_URL=postgres://localhost:5432/fg
+pnpm --filter @fg/db reset       # esquema + catálogo de ejemplo (bancos ficticios)
+pnpm test                        # todos los paquetes
+cp apps/admin/.env.example apps/admin/.env.local   # completa las claves
+pnpm --filter @fg/admin dev      # panel en http://localhost:3001
 ```
+
+> Las pruebas de `apps/admin` reinician la base de datos: úsalas con una BD desechable.
 
 ## Orden de trabajo sugerido con Claude Code
 

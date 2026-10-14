@@ -11,3 +11,7 @@ Lee docs/PRODUCT.md y docs/MVP.md antes de cualquier tarea.
 - Pesos, umbrales y plantillas de misiones viven en configuración, no en código.
 - Una sola app Expo para Web, iOS y Android. No crear apps nativas separadas.
 - Textos de la app en español de Panamá.
+- Tests con `node:test` + `tsx` (sin vitest). Corre `pnpm test` antes de cada commit.
+- Migraciones en SQL plano en `packages/db/migrations/`, numeradas. Nunca edites una migración ya aplicada en producción: crea otra.
+- Imports relativos con extensión `.js` (ESM en Node).
+- Datos de prueba: bancos ficticios (Alfa, Beta, Gamma, Delta, Omega). Nunca datos reales de usuarios.

@@ -1,4 +1,4 @@
-import type { ApcSelfReported, FactorId, GoalType } from './types';
+import type { ApcSelfReported, FactorId, GoalType } from './types.js';
 
 /**
  * Configuración del motor: pesos, umbrales y plantillas de misiones.

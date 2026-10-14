@@ -1,6 +1,6 @@
-import { defaultConfig, type EngineConfig } from './config';
-import { clamp01, lowerIsBetter, monthlyPayment, paymentCapacity, round, stableHash, totalInterest } from './finance';
-import { downPaymentPct, marketContext } from './market';
+import { defaultConfig, type EngineConfig } from './config.js';
+import { clamp01, lowerIsBetter, monthlyPayment, paymentCapacity, round, stableHash, totalInterest } from './finance.js';
+import { downPaymentPct, marketContext } from './market.js';
 import type {
   Catalog,
   ExcludedProduct,
@@ -10,7 +10,7 @@ import type {
   RankedProduct,
   RankingResult,
   Reason,
-} from './types';
+} from './types.js';
 
 /**
  * Vista del producto que el ranking puede leer.
@@ -191,7 +191,8 @@ export function rankProducts(
     audit: {
       catalogVersion: catalog.version,
       weightsVersion: cfg.version,
-      inputHash: stableHash({ goal, snapshot, products: views }),
+      // Ordenado por id: el hash no depende del orden en que llega el catálogo.
+      inputHash: stableHash({ goal, snapshot, products: [...views].sort((a, b) => a.id.localeCompare(b.id)) }),
     },
   };
 }

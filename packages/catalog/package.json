@@ -1,0 +1,30 @@
+{
+  "name": "@fg/catalog",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Captura del catálogo: extracción con IA, validación, citas, comparación con la versión vigente.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "tsx --test test/*.test.ts"
+  },
+  "dependencies": {
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@fg/engine": "workspace:*",
+    "typescript": "^5.6.0",
+    "tsx": "^4.19.0",
+    "@types/node": "^22.0.0"
+  }
+}

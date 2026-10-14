@@ -1,4 +1,4 @@
-import { defaultConfig, type EngineConfig, type GoalRecipe } from './config';
+import { defaultConfig, type EngineConfig, type GoalRecipe } from './config.js';
 import {
   clamp01,
   creditUtilization,
@@ -6,8 +6,8 @@ import {
   lowerIsBetter,
   monthlyPayment,
   round,
-} from './finance';
-import { downPaymentPct, marketContext, type MarketContext } from './market';
+} from './finance.js';
+import { downPaymentPct, marketContext, type MarketContext } from './market.js';
 import type {
   FactorId,
   FactorResult,
@@ -16,7 +16,7 @@ import type {
   Obstacle,
   Product,
   ReadinessResult,
-} from './types';
+} from './types.js';
 
 interface FactorEval {
   score: number;

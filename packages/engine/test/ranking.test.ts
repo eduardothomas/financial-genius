@@ -50,7 +50,8 @@ describe('rankProducts', () => {
 
   it('el orden del catálogo no cambia el resultado', () => {
     const reversed: Catalog = { ...catalog, products: [...catalog.products].reverse() };
-    assert.deepEqual(rankProducts(metaAuto, familia, catalog).top, rankProducts(metaAuto, familia, reversed).top);
+    // Resultado completo, incluida la huella de auditoría.
+    assert.deepEqual(rankProducts(metaAuto, familia, catalog), rankProducts(metaAuto, familia, reversed));
   });
 
   it('el endeudado no recibe productos que no puede pagar como "cuota cómoda"', () => {

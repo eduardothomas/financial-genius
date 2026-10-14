@@ -1,0 +1,15 @@
+{
+  "name": "@fg/db",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Esquema PostgreSQL, semilla y pruebas de BD. Migraciones en SQL plano.",
+  "type": "module",
+  "scripts": {
+    "migrate": "for f in migrations/*.sql; do psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -q -f \"$f\" || exit 1; done",
+    "seed": "psql \"$DATABASE_URL\" -q -v catalog=\"$(cat seed/catalog.sample.json)\" -f seed/seed.sql",
+    "test": "psql \"$DATABASE_URL\" -q -f test/db.test.sql && tsx test/e2e.engine.ts",
+    "reset": "psql \"$DATABASE_URL\" -q -c 'drop schema public cascade; create schema public;' && pnpm migrate && pnpm seed"
+  },
+  "dependencies": { "@fg/engine": "workspace:*" },
+  "devDependencies": { "tsx": "^4.19.0", "@types/node": "^22.0.0" }
+}

@@ -1,4 +1,4 @@
-import type { FinancialSnapshot } from './types';
+import type { FinancialSnapshot } from './types.js';
 
 export const clamp01 = (x: number): number => (x < 0 ? 0 : x > 1 ? 1 : x);
 
