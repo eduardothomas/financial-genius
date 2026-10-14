@@ -22,5 +22,7 @@ Lee docs/PRODUCT.md y docs/MVP.md antes de cualquier tarea.
 - `packages/engine` motor puro · `packages/catalog` captura con IA · `packages/contracts` esquemas zod API↔app
 - `packages/db` migraciones SQL, semilla, `Db` y utilidades de prueba (`@fg/db/testing`)
 - `services/api` API v1 (node:http; handlers independientes del framework) · `apps/admin` panel del catálogo (Next.js)
+- `apps/app` app Expo Router (Web/iOS/Android); lógica en `src/lib` con pruebas; tokens de diseño en `src/ui/theme.ts` (motivo: nivel de esclusa)
+- El CI publica la web de cada PR en la rama `vista-previa-web` (para revisión visual)
 - Las pruebas de API y admin reinician la BD de `DATABASE_URL`: usar siempre una BD desechable.
 - El repo aún no tiene `pnpm-lock.yaml`: generarlo con `pnpm install` en una máquina con acceso a npm y subirlo en un PR.
