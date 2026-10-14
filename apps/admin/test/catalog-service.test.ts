@@ -4,9 +4,6 @@
  */
 import { before, describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
-import { readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
 import { rankProducts, type Product } from '@fg/engine';
 import type { Extractor } from '@fg/catalog';
 import {
@@ -18,14 +15,12 @@ import {
   recheckAllSources,
   rejectProposal,
 } from '../lib/catalog-service';
-import { psqlDb } from './psql-db';
+import { psqlDb, resetDatabase } from '@fg/db/testing';
 import { familia, metaAuto } from '../../../packages/engine/test/fixtures';
 
 const URL_DB = process.env.DATABASE_URL;
 if (!URL_DB) throw new Error('Falta DATABASE_URL (BD desechable)');
-const DBDIR = join(import.meta.dirname, '../../../packages/db');
 const db = psqlDb(URL_DB);
-const psql = (...args: string[]) => execFileSync('psql', [URL_DB, '-q', '-v', 'ON_ERROR_STOP=1', ...args], { stdio: 'pipe' });
 
 // --- Página FICTICIA del Banco Omega, que cambia durante la prueba ---
 let rate = '6.75';
@@ -67,11 +62,7 @@ const input = {
   type: 'auto_loan' as const, productName: 'Auto Omega',
 };
 
-before(() => {
-  psql('-c', 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;');
-  for (const f of readdirSync(join(DBDIR, 'migrations')).sort()) psql('-f', join(DBDIR, 'migrations', f));
-  psql('-v', `catalog=${readFileSync(join(DBDIR, 'seed/catalog.sample.json'), 'utf8')}`, '-f', join(DBDIR, 'seed/seed.sql'));
-});
+before(() => resetDatabase(URL_DB));
 
 describe('panel admin: flujo del catálogo', () => {
   let firstId = '';
