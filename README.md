@@ -38,7 +38,8 @@ Las reglas para Claude Code están en `CLAUDE.md`.
 - [x] `packages/db` — esquema PostgreSQL, semilla, flujo propuesta → aprobación (9 tests SQL + prueba con el motor)
 - [x] `packages/catalog` — extracción con IA, citas anti-alucinación, validación, comparación (16 tests)
 - [x] `apps/admin` — panel del catálogo; lógica probada contra PostgreSQL (6 tests), pantallas Next.js sin ejecutar aún
-- [ ] `services/api`
+- [x] `services/api` — API v1: perfil, metas, preparación, top 3, plan y misiones, borrar cuenta (15 tests)
+- [x] `packages/contracts` — esquemas de entrada compartidos API ↔ app
 - [ ] `apps/app`
 - [ ] Chat
 
@@ -53,9 +54,10 @@ pnpm --filter @fg/db reset       # esquema + catálogo de ejemplo (bancos fictic
 pnpm test                        # todos los paquetes
 cp apps/admin/.env.example apps/admin/.env.local   # completa las claves
 pnpm --filter @fg/admin dev      # panel en http://localhost:3001
+pnpm --filter @fg/api dev        # API en http://localhost:3000
 ```
 
-> Las pruebas de `apps/admin` reinician la base de datos: úsalas con una BD desechable.
+> Las pruebas de `apps/admin` y `services/api` reinician la base de datos: úsalas con una BD desechable.
 
 ## Orden de trabajo sugerido con Claude Code
 
@@ -68,3 +70,10 @@ pnpm --filter @fg/admin dev      # panel en http://localhost:3001
 7. Lectura de documentos, notificaciones, analytics y build de beta.
 
 Por qué el chat va al final: si el motor y las pantallas funcionan sin chat, el chat solo tiene que explicarlos, y es mucho más fácil de probar.
+
+## Flujo de cambios
+
+- `main` es producción: nunca commits directos.
+- Cada cambio en una rama con nombre en español (`api-v1`, `fix-ranking`), commits pequeños y PR con qué cambia, por qué y cómo se probó.
+- GitHub Actions corre todas las pruebas con PostgreSQL 16 en cada PR.
+- Se fusiona con squash merge cuando Eduardo lo aprueba.
