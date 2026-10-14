@@ -9,10 +9,13 @@ concurrency:
   group: pruebas-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
   pruebas:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     services:
       postgres:
         image: postgres:16
@@ -40,3 +43,21 @@ jobs:
         run: pnpm --filter @fg/db reset
       - name: Pruebas (una a la vez; comparten la BD)
         run: pnpm turbo run test --concurrency=1
+      - name: Tipos de la app
+        run: pnpm --filter @fg/app typecheck
+      - name: Versiones de Expo
+        run: pnpm --filter @fg/app exec expo install --check || echo "::warning::Hay versiones de Expo para alinear"
+      - name: Compilar la app web
+        run: pnpm --filter @fg/app export:web
+        env:
+          EXPO_PUBLIC_API_URL: http://localhost:3000
+      - name: Publicar vista previa web (rama vista-previa-web)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          cd apps/app/dist
+          git init -q -b vista-previa-web
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          echo "Vista previa de ${{ github.head_ref }} @ ${{ github.event.pull_request.head.sha }}" > VISTA_PREVIA.txt
+          git add -A && git commit -q -m "Vista previa de ${{ github.head_ref }}"
+          git push -f -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" vista-previa-web

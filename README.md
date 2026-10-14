@@ -40,7 +40,7 @@ Las reglas para Claude Code están en `CLAUDE.md`.
 - [x] `apps/admin` — panel del catálogo; lógica probada contra PostgreSQL (6 tests), pantallas Next.js sin ejecutar aún
 - [x] `services/api` — API v1: perfil, metas, preparación, top 3, plan y misiones, borrar cuenta (15 tests)
 - [x] `packages/contracts` — esquemas de entrada compartidos API ↔ app
-- [ ] `apps/app`
+- [x] `apps/app` — app Expo: Metas, Plan, Productos y Perfil (sesión de desarrollo; 12 tests de lógica)
 - [ ] Chat
 
 ## Primeros pasos
@@ -55,6 +55,7 @@ pnpm test                        # todos los paquetes
 cp apps/admin/.env.example apps/admin/.env.local   # completa las claves
 pnpm --filter @fg/admin dev      # panel en http://localhost:3001
 pnpm --filter @fg/api dev        # API en http://localhost:3000
+pnpm --filter @fg/app web        # app en el navegador (también ios / android)
 ```
 
 > Las pruebas de `apps/admin` y `services/api` reinician la base de datos: úsalas con una BD desechable.
