@@ -9,7 +9,10 @@
  *
  * Desarrollo: encabezado x-dev-user (solo con FG_DEV_USERS=1; main.ts lo prohíbe en producción).
  */
-import { createHmac, createPublicKey, timingSafeEqual, verify as cryptoVerify, type JsonWebKey, type KeyObject } from 'node:crypto';
+import { createHmac, createPublicKey, timingSafeEqual, verify as cryptoVerify, type KeyObject } from 'node:crypto';
+
+/** Clave pública en formato JWK (subconjunto que usamos). */
+type Jwk = { kty?: string; kid?: string; alg?: string; use?: string; [k: string]: unknown };
 import { unauthorized } from './errors.js';
 
 export interface Identity {
@@ -70,13 +73,13 @@ export function remoteJwks(url: string, opts: { fetchImpl?: typeof fetch; ttlMs?
   async function refresh() {
     const res = await f(url, { headers: { accept: 'application/json' } });
     if (!res.ok) throw unauthorized(`No se pudieron leer las claves de autenticación (${res.status})`);
-    const body = (await res.json()) as { keys?: Array<JsonWebKey & { kid?: string; alg?: string; use?: string }> };
+    const body = (await res.json()) as { keys?: Jwk[] };
     const next = new Map<string, { key: KeyObject; alg: string }>();
     for (const jwk of body.keys ?? []) {
       if (!jwk.kid || (jwk.use && jwk.use !== 'sig')) continue;
       const alg = jwk.alg ?? (jwk.kty === 'EC' ? 'ES256' : jwk.kty === 'RSA' ? 'RS256' : '');
       if (alg !== 'ES256' && alg !== 'RS256') continue;
-      next.set(jwk.kid, { key: createPublicKey({ key: jwk, format: 'jwk' }), alg });
+      next.set(jwk.kid, { key: createPublicKey({ key: jwk, format: 'jwk' } as Parameters<typeof createPublicKey>[0]), alg });
     }
     keys = next;
     fetchedAt = now();
