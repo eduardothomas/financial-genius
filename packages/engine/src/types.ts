@@ -147,7 +147,8 @@ export type ReasonCode =
   | 'matches_preferences'
   | 'affordable_payment'
   | 'tight_payment'
-  | 'no_annual_fee';
+  | 'no_annual_fee'
+  | 'higher_down_payment';
 
 export interface Reason {
   code: ReasonCode;

@@ -1,5 +1,5 @@
 import { defaultConfig, type EngineConfig } from './config.js';
-import { clamp01, lowerIsBetter, monthlyPayment, paymentCapacity, round, stableHash, totalInterest } from './finance.js';
+import { balboas, clamp01, lowerIsBetter, monthlyPayment, paymentCapacity, round, stableHash, totalInterest } from './finance.js';
 import { downPaymentPct, marketContext } from './market.js';
 import type {
   Catalog,
@@ -139,6 +139,7 @@ export function rankProducts(
 
   scored.sort((a, b) => b.score - a.score || b.cost - a.cost || a.v.id.localeCompare(b.v.id));
 
+  const lowestDown = Math.min(...scored.map((x) => x.loan?.downPct ?? Infinity));
   const top: RankedProduct[] = scored.slice(0, cfg.topN).map((x, i) => {
     const reasons: Reason[] = [];
     if (x.cost === 1 && eligible.length > 1) reasons.push({ code: 'lowest_cost', params: { compared: eligible.length } });
@@ -151,16 +152,18 @@ export function rankProducts(
       reasons.push({ code: 'tight_payment', params: { payment: round(x.payment), capacity: round(capacity) } });
     if (x.eligibility >= 0.6) reasons.push({ code: 'comfortable_requirements', params: { minIncome: x.v.requirements.minIncome } });
     else if (x.eligibility < 0.2) reasons.push({ code: 'tight_requirements', params: { minIncome: x.v.requirements.minIncome } });
+    // Un abono mayor baja la cuota y el costo, pero exige más ahorro: se dice explícitamente.
+    if (x.loan && x.loan.downPct > lowestDown) reasons.push({ code: 'higher_down_payment', params: { pct: x.loan.downPct, lowest: lowestDown } });
 
     const assumptions = [
       `Tasa estimada con el punto medio del rango publicado (${x.v.rate.min}%–${x.v.rate.max}%); la tasa final la define el banco según tu perfil.`,
     ];
     if (x.loan) {
       assumptions.push(
-        `Monto financiado ${round(x.loan.principal)} con abono de ${x.loan.downPct}% y plazo de ${x.loan.term} meses.`,
+        `Monto financiado ${balboas(round(x.loan.principal))} con abono de ${x.loan.downPct}% y plazo de ${x.loan.term} meses.`,
       );
     } else {
-      assumptions.push(`Costo de intereses estimado con un saldo promedio de ${CARD_ASSUMED_BALANCE}.`);
+      assumptions.push(`Costo de intereses estimado con un saldo promedio de ${balboas(CARD_ASSUMED_BALANCE)}.`);
     }
 
     return {
@@ -176,7 +179,10 @@ export function rankProducts(
         affordability: round(x.affordability, 3),
       },
       estimatedMonthlyPayment: x.payment === null ? null : round(x.payment),
-      reasons: reasons.slice(0, 4),
+      // La advertencia de abono nunca se recorta.
+      reasons: reasons.some((r) => r.code === 'higher_down_payment')
+        ? [...reasons.filter((r) => r.code !== 'higher_down_payment').slice(0, 3), reasons.find((r) => r.code === 'higher_down_payment')!]
+        : reasons.slice(0, 4),
       assumptions,
       source: x.v.source,
     };

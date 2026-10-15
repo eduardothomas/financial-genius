@@ -21,6 +21,17 @@ export function monthlyPayment(principal: number, annualRatePct: number, termMon
   return (principal * r) / (1 - (1 + r) ** -termMonths);
 }
 
+/**
+ * Monto en balboas para textos del motor (supuestos, razones): "B/. 22,500", "B/. 389.03".
+ * Sin Intl para que el resultado sea idéntico en Node, iOS, Android y web.
+ */
+export function balboas(x: number): string {
+  const neg = x < 0;
+  const [int, dec] = Math.abs(round(x, 2)).toFixed(2).split('.') as [string, string];
+  const grouped = int.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return `${neg ? '-' : ''}B/. ${grouped}${dec === '00' ? '' : `.${dec}`}`;
+}
+
 /** Total de intereses pagados en la vida del préstamo. */
 export function totalInterest(principal: number, annualRatePct: number, termMonths: number): number {
   return monthlyPayment(principal, annualRatePct, termMonths) * termMonths - principal;

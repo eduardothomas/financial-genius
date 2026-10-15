@@ -53,6 +53,15 @@ describe('ratios', () => {
   });
 });
 
+describe('balboas', () => {
+  it('formatea montos para los textos del motor', async () => {
+    const { balboas } = await import('../src/index.js');
+    assert.equal(balboas(22500), 'B/. 22,500');
+    assert.equal(balboas(389.03), 'B/. 389.03');
+    assert.equal(balboas(1000), 'B/. 1,000');
+  });
+});
+
 describe('stableHash', () => {
   it('no depende del orden de las claves', () => {
     assert.equal(stableHash({ a: 1, b: [1, 2] }), stableHash({ b: [1, 2], a: 1 }));

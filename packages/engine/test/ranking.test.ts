@@ -68,6 +68,14 @@ describe('rankProducts', () => {
     assert.ok(alfa.assumptions.some((a) => a.includes('abono de 10%')), alfa.assumptions.join(' | '));
   });
 
+  it('avisa cuando un producto exige más abono que las otras opciones', () => {
+    const r = rankProducts(metaAuto, familia, catalog);
+    const beta = r.top.find((t) => t.productId === 'beta-auto')!;
+    assert.deepEqual(beta.reasons.find((x) => x.code === 'higher_down_payment')?.params, { pct: 15, lowest: 10 });
+    assert.ok(!r.top.find((t) => t.productId === 'alfa-auto')!.reasons.some((x) => x.code === 'higher_down_payment'));
+    assert.ok(beta.assumptions.some((a) => a.includes('B/. 21,250')), beta.assumptions.join(' | '));
+  });
+
   /**
    * REGLA DE ORO — no borrar este test.
    * Ningún dato comercial (patrocinio, comisión) puede alterar el ranking.
