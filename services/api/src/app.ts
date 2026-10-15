@@ -222,7 +222,7 @@ export function createApp(opts: AppOptions) {
       let userId = '';
       let identity = null;
       if (!m.route.public) {
-        identity = identify(req.headers, opts.auth);
+        identity = await identify(req.headers, opts.auth);
         userId = userCache.get(identity.subject) ?? (await repo.upsertUser(db, identity.subject, identity.email));
         userCache.set(identity.subject, userId);
       }

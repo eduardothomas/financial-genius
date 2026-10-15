@@ -9,7 +9,7 @@ import type { AddressInfo } from 'node:net';
 import { psqlDb, resetDatabase } from '@fg/db/testing';
 import { defaultConfig, type ReadinessResult } from '@fg/engine';
 import { createApp } from '../src/app.js';
-import { signHs256, verifyHs256 } from '../src/auth.js';
+import { signHs256, verifyJwt } from '../src/auth.js';
 import { buildMonthlyPlan, weekStart } from '../src/domain/plan.js';
 import { familia, endeudado } from '../../../packages/engine/test/fixtures.js';
 
@@ -25,7 +25,7 @@ before(async () => {
   resetDatabase(URL_DB);
   const handle = createApp({
     db: psqlDb(URL_DB),
-    auth: { jwtSecret: SECRET, devUsers: true },
+    auth: { jwt: { hs256Secret: SECRET }, devUsers: true },
     now: () => TODAY,
     corsOrigins: ['http://localhost:8081'],
   });
@@ -80,14 +80,14 @@ describe('autenticación', () => {
   });
   it('JWT HS256: válido entra; firma mala, vencido o alg distinto no', async () => {
     const exp = Math.floor(Date.now() / 1000) + 600;
-    const ok = signHs256({ sub: 'sb-123', email: 'jwt@ejemplo.test', exp }, SECRET);
+    const ok = signHs256({ sub: 'sb-123', email: 'jwt@ejemplo.test', exp, aud: 'authenticated', role: 'authenticated' }, SECRET);
     const me = await call('GET', '/v1/me', { token: ok });
     assert.equal(me.status, 200);
     assert.equal(me.body.email, 'jwt@ejemplo.test');
-    assert.equal((await call('GET', '/v1/me', { token: signHs256({ sub: 'x', email: 'a@b.c', exp }, 'otro') })).status, 401);
-    assert.equal((await call('GET', '/v1/me', { token: signHs256({ sub: 'x', email: 'a@b.c', exp: 10 }, SECRET) })).status, 401);
+    assert.equal((await call('GET', '/v1/me', { token: signHs256({ sub: 'x', email: 'a@b.c', exp, aud: 'authenticated' }, 'otro') })).status, 401);
+    assert.equal((await call('GET', '/v1/me', { token: signHs256({ sub: 'x', email: 'a@b.c', exp: 10, aud: 'authenticated' }, SECRET) })).status, 401);
     const none = ok.replace(/^[^.]+/, Buffer.from(JSON.stringify({ alg: 'none' })).toString('base64url'));
-    assert.throws(() => verifyHs256(none, SECRET));
+    await assert.rejects(verifyJwt(none, { hs256Secret: SECRET }));
   });
 });
 
