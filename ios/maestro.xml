@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<testsuites>
-  <testsuite name="Test Suite" device="iPhone 16 Pro - iOS 18.5 - DC4CD8B3-4457-4153-9087-A0D7A2F9BFD9" tests="1" failures="1" time="112.735" timestamp="2026-10-15T06:35:44">
-    <testcase id="recorrido" name="recorrido" classname="recorrido" file=".maestro/recorrido.yaml" time="112.649" timestamp="2026-10-15T06:35:44" status="ERROR">
-      <failure>Assertion is false: "Comprar casa" is visible</failure>
-    </testcase>
-  </testsuite>
-</testsuites>
