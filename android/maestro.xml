@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <testsuites>
-  <testsuite name="Test Suite" device="test" tests="1" failures="0" time="37.943" timestamp="2026-10-15T06:48:09">
-    <testcase id="recorrido" name="recorrido" classname="recorrido" file=".maestro/recorrido.yaml" time="37.928" timestamp="2026-10-15T06:48:09" status="SUCCESS"/>
+  <testsuite name="Test Suite" device="test" tests="1" failures="0" time="43.838" timestamp="2026-10-15T07:04:02">
+    <testcase id="recorrido" name="recorrido" classname="recorrido" file=".maestro/recorrido.yaml" time="43.823" timestamp="2026-10-15T07:04:02" status="SUCCESS"/>
   </testsuite>
 </testsuites>
