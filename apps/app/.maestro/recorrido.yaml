@@ -1,0 +1,48 @@
+# Recorrido de la app con datos demo (ver services/api/scripts/datos-demo.ts).
+# Toma capturas de cada pantalla. Corre igual en Android e iOS: navega por testID.
+appId: pa.financialgenius.app
+---
+- launchApp:
+    clearState: true
+# Emuladores de CI: si aparece un aviso del sistema ("no responde"), se espera
+- tapOn:
+    text: "Wait"
+    optional: true
+- extendedWaitUntil:
+    visible: "Entrar"
+    timeout: 60000
+- takeScreenshot: capturas/0-entrar
+- tapOn: "tu@correo.com"
+- inputText: "demo@ejemplo.test"
+- tapOn: "Entrar"
+- extendedWaitUntil:
+    visible:
+      id: "meta-mortgage"
+    timeout: 30000
+- takeScreenshot: capturas/1-metas
+- tapOn:
+    id: "tab-plan"
+- tapOn:
+    id: "meta-chip-mortgage"
+- extendedWaitUntil:
+    visible: "Objetivo de.*"
+    timeout: 20000
+- takeScreenshot: capturas/2-plan
+- tapOn:
+    id: "tab-productos"
+- extendedWaitUntil:
+    visible: "Por qué está aquí"
+    timeout: 30000
+- takeScreenshot: capturas/3-productos
+- tapOn:
+    id: "tab-perfil"
+- waitForAnimationToEnd
+- takeScreenshot: capturas/4-perfil
+- tapOn:
+    id: "tab-metas"
+- tapOn:
+    id: "meta-mortgage"
+- extendedWaitUntil:
+    visible: "Lo que te frena"
+    timeout: 30000
+- takeScreenshot: capturas/5-meta-casa

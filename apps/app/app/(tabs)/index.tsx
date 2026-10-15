@@ -33,6 +33,7 @@ export default function Metas() {
         const level = g.readinessScore ?? 0;
         return (
           <Pressable
+            testID={`meta-${g.type}`}
             key={g.id}
             accessibilityRole="link"
             accessibilityLabel={`${GOAL_LABEL[g.type]}, preparación ${g.readinessScore ?? 'sin calcular'}`}

@@ -17,10 +17,10 @@ export default function TabsLayout() {
         sceneStyle: { backgroundColor: color.bg },
       }}
     >
-      <Tabs.Screen name="index" options={{ title: 'Metas' }} />
-      <Tabs.Screen name="plan" options={{ title: 'Plan' }} />
-      <Tabs.Screen name="productos" options={{ title: 'Productos' }} />
-      <Tabs.Screen name="perfil" options={{ title: 'Perfil' }} />
+      <Tabs.Screen name="index" options={{ tabBarButtonTestID: 'tab-metas', title: 'Metas' }} />
+      <Tabs.Screen name="plan" options={{ tabBarButtonTestID: 'tab-plan', title: 'Plan' }} />
+      <Tabs.Screen name="productos" options={{ tabBarButtonTestID: 'tab-productos', title: 'Productos' }} />
+      <Tabs.Screen name="perfil" options={{ tabBarButtonTestID: 'tab-perfil', title: 'Perfil' }} />
     </Tabs>
   );
 }

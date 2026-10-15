@@ -52,7 +52,7 @@ export default function NuevaMeta() {
   }
 
   return (
-    <Screen>
+    <Screen underHeader>
       <Choice
         label="¿Qué quieres lograr?"
         value={goalType}
