@@ -34,9 +34,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          # Agregar "cache: pnpm" cuando el repo tenga pnpm-lock.yaml
+          cache: pnpm
       - name: Instalar dependencias
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Compilar paquetes
         run: pnpm turbo run build --filter="./packages/*"
       - name: Base de datos (migración + semilla)
