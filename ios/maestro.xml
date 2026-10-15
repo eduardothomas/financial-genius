@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="iPhone 16 Pro - iOS 18.5 - DC4CD8B3-4457-4153-9087-A0D7A2F9BFD9" tests="1" failures="0" time="155.001" timestamp="2026-10-15T07:27:10">
+    <testcase id="recorrido" name="recorrido" classname="recorrido" file=".maestro/recorrido.yaml" time="154.826" timestamp="2026-10-15T07:27:10" status="SUCCESS"/>
+  </testsuite>
+</testsuites>
