@@ -1,8 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <testsuites>
-  <testsuite name="Test Suite" device="test" tests="1" failures="1" time="65.815" timestamp="2026-10-15T06:32:17">
-    <testcase id="recorrido" name="recorrido" classname="recorrido" file=".maestro/recorrido.yaml" time="65.787" timestamp="2026-10-15T06:32:17" status="ERROR">
-      <failure>Assertion is false: "Entrar" is visible</failure>
-    </testcase>
+  <testsuite name="Test Suite" device="test" tests="1" failures="0" time="37.943" timestamp="2026-10-15T06:48:09">
+    <testcase id="recorrido" name="recorrido" classname="recorrido" file=".maestro/recorrido.yaml" time="37.928" timestamp="2026-10-15T06:48:09" status="SUCCESS"/>
   </testsuite>
 </testsuites>
