@@ -25,7 +25,7 @@ export default function Meta() {
   };
 
   return (
-    <Screen>
+    <Screen underHeader>
       {loading ? <Loading /> : null}
       {needsProfile ? (
         <>

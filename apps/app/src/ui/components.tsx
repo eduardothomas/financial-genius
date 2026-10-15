@@ -3,12 +3,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
 import { color, maxWidth, radius, space, type } from './theme';
 
-export function Screen({ children }: { children: ReactNode }) {
+/** Pantalla con scroll. `underHeader`: la pantalla ya tiene encabezado de navegación (no suma el área segura). */
+export function Screen({ children, underHeader = false }: { children: ReactNode; underHeader?: boolean }) {
   const insets = useSafeAreaInsets();
   return (
     <ScrollView
       style={s.screen}
-      contentContainerStyle={[s.screenInner, { paddingTop: space.xl + insets.top }]}
+      contentContainerStyle={[s.screenInner, { paddingTop: underHeader ? space.lg : space.xl + insets.top }]}
       keyboardShouldPersistTaps="handled"
     >
       <View style={s.column}>{children}</View>
