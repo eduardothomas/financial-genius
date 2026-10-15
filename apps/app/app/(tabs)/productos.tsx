@@ -38,7 +38,8 @@ export default function Productos() {
       {rec.data ? (
         <>
           <Body muted>
-            Revisamos {rec.data.consideredCount} productos y cumples los requisitos de {rec.data.eligibleCount}.
+            Revisamos {rec.data.consideredCount} productos y cumples los requisitos de {rec.data.eligibleCount}. Los ordenamos por costo
+            total, qué tan holgado cumples los requisitos y cuánto pesa la cuota en tu presupuesto.
           </Body>
           {rec.data.notice ? <Notice>{rec.data.notice}</Notice> : null}
           {rec.data.top.length === 0 ? (

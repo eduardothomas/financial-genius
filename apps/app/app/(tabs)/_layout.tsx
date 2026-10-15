@@ -8,9 +8,7 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerStyle: { backgroundColor: color.bg },
-        headerTintColor: color.lock,
-        headerShadowVisible: false,
+        headerShown: false, // cada pantalla tiene su propio título
         tabBarActiveTintColor: color.lock,
         tabBarInactiveTintColor: color.muted,
         tabBarStyle: { backgroundColor: color.surface, borderTopColor: color.line },

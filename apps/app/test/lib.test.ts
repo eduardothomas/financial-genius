@@ -41,6 +41,10 @@ describe('textos de razones y frenos', () => {
       reasonText({ code: 'affordable_payment', params: { payment: 389.03, capacity: 940 } }),
       'Cuota estimada de B/. 389, cómoda para tu capacidad de B/. 940',
     );
+    assert.equal(
+      reasonText({ code: 'higher_down_payment', params: { pct: 15, lowest: 10 } }),
+      'Pide 15% de abono (otras opciones piden 10%): cuota más baja, pero necesitas más ahorro',
+    );
     for (const code of ['low_cost', 'no_annual_fee', 'tight_payment', 'comfortable_requirements', 'tight_requirements'] as const) {
       assert.ok(reasonText({ code, params: { payment: 1, capacity: 1, minIncome: 1, compared: 1 } }).length > 5);
     }
