@@ -15,6 +15,13 @@ appId: pa.financialgenius.app
 - tapOn: "tu@correo.com"
 - inputText: "demo@ejemplo.test"
 - tapOn: "Entrar"
+# Inicio: el Genio (en CI no hay ANTHROPIC_API_KEY: se ve la bienvenida y las sugerencias)
+- extendedWaitUntil:
+    visible: "Tu Genio"
+    timeout: 30000
+- takeScreenshot: capturas/1-genio
+- tapOn:
+    id: "tab-metas"
 - extendedWaitUntil:
     visible:
       id: "meta-mortgage"
