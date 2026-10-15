@@ -1,9 +1,13 @@
 # Recorrido de la app con datos demo (ver services/api/scripts/datos-demo.ts).
-# Toma capturas de cada pantalla. Corre igual en Android e iOS.
+# Toma capturas de cada pantalla. Corre igual en Android e iOS: navega por testID.
 appId: pa.financialgenius.app
 ---
 - launchApp:
     clearState: true
+# Emuladores de CI: si aparece un aviso del sistema ("no responde"), se espera
+- tapOn:
+    text: "Wait"
+    optional: true
 - extendedWaitUntil:
     visible: "Entrar"
     timeout: 60000
@@ -12,39 +16,32 @@ appId: pa.financialgenius.app
 - inputText: "demo@ejemplo.test"
 - tapOn: "Entrar"
 - extendedWaitUntil:
-    visible: "Tus metas"
-    timeout: 30000
-- extendedWaitUntil:
-    visible: "Comprar casa"
+    visible:
+      id: "meta-mortgage"
     timeout: 30000
 - takeScreenshot: capturas/1-metas
-- tapOn: "Plan"
-- extendedWaitUntil:
-    visible: "Tu plan"
-    timeout: 20000
 - tapOn:
-    text: "Comprar casa"
-    index: 0
+    id: "tab-plan"
+- tapOn:
+    id: "meta-chip-mortgage"
 - extendedWaitUntil:
     visible: "Objetivo de.*"
     timeout: 20000
 - takeScreenshot: capturas/2-plan
-- tapOn: "Productos"
-- extendedWaitUntil:
-    visible: "Mejores opciones"
-    timeout: 20000
+- tapOn:
+    id: "tab-productos"
 - extendedWaitUntil:
     visible: "Por qué está aquí"
     timeout: 30000
 - takeScreenshot: capturas/3-productos
-- tapOn: "Perfil"
+- tapOn:
+    id: "tab-perfil"
 - waitForAnimationToEnd
 - takeScreenshot: capturas/4-perfil
-- tapOn: "Metas"
-- extendedWaitUntil:
-    visible: "Comprar casa"
-    timeout: 20000
-- tapOn: "Comprar casa"
+- tapOn:
+    id: "tab-metas"
+- tapOn:
+    id: "meta-mortgage"
 - extendedWaitUntil:
     visible: "Lo que te frena"
     timeout: 30000

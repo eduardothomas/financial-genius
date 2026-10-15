@@ -8,4 +8,8 @@ xcrun simctl bootstatus "$UDID" -b
 APP=$(ls -d ios/build/Build/Products/Release-iphonesimulator/*.app | head -1)
 xcrun simctl install "$UDID" "$APP"
 mkdir -p capturas
-maestro --device "$UDID" test .maestro/recorrido.yaml --format junit --output capturas/maestro.xml || (xcrun simctl io "$UDID" screenshot capturas/error.png; exit 1)
+status=0
+maestro --device "$UDID" test .maestro/recorrido.yaml --format junit --output capturas/maestro.xml || status=$?
+# Maestro guarda las capturas junto al flujo: se juntan en capturas/
+cp -R .maestro/capturas/. capturas/ 2>/dev/null || true
+if [ "$status" != "0" ]; then xcrun simctl io "$UDID" screenshot capturas/error.png; exit "$status"; fi

@@ -19,6 +19,7 @@ export function GoalPicker({ goals }: { goals: GoalView[] }) {
         return (
           <Pressable
             key={g.id}
+            testID={`meta-chip-${g.type}`}
             accessibilityRole="tab"
             accessibilityState={{ selected: on }}
             onPress={() => setGoalId(g.id)}
