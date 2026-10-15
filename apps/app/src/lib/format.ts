@@ -91,6 +91,8 @@ export function reasonText(r: Reason): string {
       return `Cumples con holgura el ingreso mínimo de ${money(Number(p.minIncome))}`;
     case 'tight_requirements':
       return `Cumples justo el ingreso mínimo de ${money(Number(p.minIncome))}`;
+    case 'higher_down_payment':
+      return `Pide ${p.pct}% de abono (otras opciones piden ${p.lowest}%): cuota más baja, pero necesitas más ahorro`;
   }
 }
 

@@ -212,7 +212,7 @@ export function createApp(opts: AppOptions) {
           res.writeHead(204, {
             'access-control-allow-origin': origin,
             'access-control-allow-methods': 'GET,POST,PATCH,DELETE',
-            'access-control-allow-headers': 'authorization,content-type',
+            'access-control-allow-headers': opts.auth.devUsers ? 'authorization,content-type,x-dev-user' : 'authorization,content-type',
             'access-control-max-age': '600',
             vary: 'Origin',
           });

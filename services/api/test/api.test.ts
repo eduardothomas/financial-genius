@@ -196,6 +196,10 @@ describe('flujo completo de un usuario', () => {
     assert.equal(ok.headers.get('access-control-allow-origin'), 'http://localhost:8081');
     const no = await fetch(`${base}/v1/health`, { headers: { origin: 'https://malo.test' } });
     assert.equal(no.headers.get('access-control-allow-origin'), null);
+    // Preflight: permite x-dev-user solo porque este servidor tiene usuarios de desarrollo activos
+    const pre = await fetch(`${base}/v1/me`, { method: 'OPTIONS', headers: { origin: 'http://localhost:8081', 'access-control-request-headers': 'x-dev-user' } });
+    assert.equal(pre.status, 204);
+    assert.match(pre.headers.get('access-control-allow-headers') ?? '', /x-dev-user/);
     assert.equal((await call('GET', '/v1/nada', { user: ANA })).status, 404);
     assert.equal((await call('PUT', '/v1/goals', { user: ANA })).status, 405);
   });
