@@ -74,8 +74,10 @@ export class ApiRequestError extends Error {
 
 export interface ApiClientOptions {
   baseUrl: string;
-  /** Encabezados de autenticación (Bearer o x-dev-user). */
-  auth: () => Record<string, string>;
+  /** Encabezados de autenticación (Bearer o x-dev-user). Puede refrescar el token antes de responder. */
+  auth: () => Record<string, string> | Promise<Record<string, string>>;
+  /** Se llama cuando la API responde 401 (sesión inválida). */
+  onUnauthorized?: () => void;
   fetchImpl?: typeof fetch;
 }
 
@@ -84,11 +86,12 @@ export function createApiClient(opts: ApiClientOptions) {
   const base = opts.baseUrl.replace(/\/+$/, '');
 
   async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
+    const authHeaders = await opts.auth();
     let res: Response;
     try {
       res = await f(`${base}${path}`, {
         method,
-        headers: { ...opts.auth(), ...(body === undefined ? {} : { 'content-type': 'application/json' }) },
+        headers: { ...authHeaders, ...(body === undefined ? {} : { 'content-type': 'application/json' }) },
         body: body === undefined ? undefined : JSON.stringify(body),
       });
     } catch {
@@ -98,6 +101,7 @@ export function createApiClient(opts: ApiClientOptions) {
     const text = await res.text();
     const data = text ? JSON.parse(text) : null;
     if (!res.ok) {
+      if (res.status === 401) opts.onUnauthorized?.();
       const e = data?.error ?? {};
       throw new ApiRequestError(res.status, e.code ?? 'unknown', e.message ?? `Error ${res.status}`, e.details);
     }

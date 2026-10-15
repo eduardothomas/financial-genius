@@ -1,9 +1,11 @@
 import { Redirect, Tabs } from 'expo-router';
 import { useSession } from '../../src/lib/session';
+import { Loading } from '../../src/ui/components';
 import { color } from '../../src/ui/theme';
 
 export default function TabsLayout() {
-  const { email } = useSession();
+  const { email, ready } = useSession();
+  if (!ready) return <Loading />;
   if (!email) return <Redirect href="/entrar" />;
   return (
     <Tabs
