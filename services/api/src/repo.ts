@@ -281,3 +281,72 @@ export async function patchAction(db: Db, userId: string, actionId: string, p: A
   );
   return rows.length > 0;
 }
+
+// ---------- Chat ----------
+
+export interface ChatMessageRow {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  attachments: unknown[];
+  createdAt: string;
+}
+
+export async function ownsConversation(db: Db, userId: string, conversationId: string): Promise<boolean> {
+  const { rows } = await db.query(`SELECT 1 AS x FROM conversation WHERE id = $1::uuid AND user_id = $2::uuid`, [conversationId, userId]);
+  return rows.length > 0;
+}
+
+export async function createConversation(db: Db, userId: string): Promise<string> {
+  const { rows } = await db.query<{ id: string }>(`INSERT INTO conversation (user_id) VALUES ($1::uuid) RETURNING id::text`, [userId]);
+  return rows[0]!.id;
+}
+
+/** Últimos `limit` mensajes de texto (usuario y Genio), en orden cronológico. */
+export async function chatMessages(db: Db, userId: string, conversationId: string, limit = 50): Promise<ChatMessageRow[]> {
+  const { rows } = await db.query<ChatMessageRow>(
+    `SELECT * FROM (
+       SELECT m.id::text, m.role::text, m.content, coalesce(m.tool_calls->'attachments', '[]'::jsonb) AS attachments,
+              m.created_at::text AS "createdAt", m.created_at AS ts
+         FROM message m JOIN conversation c ON c.id = m.conversation_id
+        WHERE c.id = $1::uuid AND c.user_id = $2::uuid AND m.role IN ('user', 'assistant')
+        ORDER BY m.created_at DESC, m.id DESC
+        LIMIT $3) t
+     ORDER BY ts, id`,
+    [conversationId, userId, limit],
+  );
+  return rows.map(({ ts: _ts, ...r }: ChatMessageRow & { ts?: unknown }) => r);
+}
+
+export async function addChatTurn(
+  db: Db,
+  conversationId: string,
+  userText: string,
+  reply: string,
+  meta: { attachments: unknown[]; trace: unknown[] },
+): Promise<string> {
+  const { rows } = await db.query<{ id: string }>(
+    `WITH u AS (
+       INSERT INTO message (conversation_id, role, content, created_at) VALUES ($1::uuid, 'user', $2, clock_timestamp()) RETURNING 1
+     )
+     INSERT INTO message (conversation_id, role, content, tool_calls, created_at)
+     SELECT $1::uuid, 'assistant', $3, $4::jsonb, clock_timestamp() + interval '1 millisecond' FROM u
+     RETURNING id::text`,
+    [conversationId, userText, reply, JSON.stringify(meta)],
+  );
+  return rows[0]!.id;
+}
+
+export async function listConversations(db: Db, userId: string) {
+  const { rows } = await db.query<{ id: string; createdAt: string; lastMessageAt: string | null; preview: string | null }>(
+    `SELECT c.id::text, c.created_at::text AS "createdAt",
+            (SELECT max(m.created_at)::text FROM message m WHERE m.conversation_id = c.id) AS "lastMessageAt",
+            (SELECT left(m.content, 120) FROM message m WHERE m.conversation_id = c.id AND m.role = 'user'
+              ORDER BY m.created_at DESC LIMIT 1) AS preview
+       FROM conversation c WHERE c.user_id = $1::uuid
+      ORDER BY coalesce((SELECT max(m.created_at) FROM message m WHERE m.conversation_id = c.id), c.created_at) DESC
+      LIMIT 20`,
+    [userId],
+  );
+  return rows;
+}

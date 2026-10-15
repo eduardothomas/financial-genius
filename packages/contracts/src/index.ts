@@ -78,3 +78,10 @@ export type ConsentInput = z.infer<typeof ConsentInputSchema>;
 export interface ApiErrorBody {
   error: { code: string; message: string; details?: unknown };
 }
+
+/** Mensaje al Genio. Sin conversationId se crea una conversación nueva. */
+export const ChatInputSchema = z.object({
+  conversationId: z.string().uuid().optional(),
+  message: z.string().trim().min(1).max(2000),
+});
+export type ChatInput = z.infer<typeof ChatInputSchema>;

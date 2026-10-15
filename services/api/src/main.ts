@@ -4,12 +4,14 @@
  *   AUTH_JWT_SECRET     secreto HS256 del proveedor de auth (ej. Supabase)
  *   FG_DEV_USERS=1      acepta x-dev-user en desarrollo (prohibido en producción)
  *   CORS_ORIGINS        orígenes permitidos separados por coma
+ *   ANTHROPIC_API_KEY   activa el chat del Genio (ANTHROPIC_MODEL opcional)
  *   PORT                por defecto 3000
  */
 import { createServer } from 'node:http';
 import pg from 'pg';
 import type { Db } from '@fg/db';
 import { createApp } from './app.js';
+import { anthropicChatModel } from './chat/model.js';
 
 const prod = process.env.NODE_ENV === 'production';
 const devUsers = process.env.FG_DEV_USERS === '1';
@@ -22,6 +24,9 @@ const db: Db = { query: (sql, params) => pool.query(sql, params as unknown[]) as
 const handle = createApp({
   db,
   auth: { jwtSecret: process.env.AUTH_JWT_SECRET, devUsers },
+  chatModel: process.env.ANTHROPIC_API_KEY
+    ? anthropicChatModel({ apiKey: process.env.ANTHROPIC_API_KEY, model: process.env.ANTHROPIC_MODEL || undefined })
+    : undefined,
   corsOrigins: (process.env.CORS_ORIGINS ?? '').split(',').map((s) => s.trim()).filter(Boolean),
 });
 

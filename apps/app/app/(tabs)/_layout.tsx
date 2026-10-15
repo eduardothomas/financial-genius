@@ -17,6 +17,7 @@ export default function TabsLayout() {
         sceneStyle: { backgroundColor: color.bg },
       }}
     >
+      <Tabs.Screen name="genio" options={{ tabBarButtonTestID: 'tab-genio', title: 'Genio' }} />
       <Tabs.Screen name="index" options={{ tabBarButtonTestID: 'tab-metas', title: 'Metas' }} />
       <Tabs.Screen name="plan" options={{ tabBarButtonTestID: 'tab-plan', title: 'Plan' }} />
       <Tabs.Screen name="productos" options={{ tabBarButtonTestID: 'tab-productos', title: 'Productos' }} />

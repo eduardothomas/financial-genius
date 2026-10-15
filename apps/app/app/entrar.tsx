@@ -9,7 +9,7 @@ export default function Entrar() {
   const { email, signIn } = useSession();
   const [value, setValue] = useState('');
   const valid = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value.trim());
-  if (email) return <Redirect href="/" />;
+  if (email) return <Redirect href="/genio" />;
   return (
     <Screen>
       <View style={{ marginTop: space.xxl }}>

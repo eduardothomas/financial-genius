@@ -2,6 +2,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { z, ZodTypeAny } from 'zod';
 import {
   ActionPatchSchema,
+  ChatInputSchema,
   ConsentInputSchema,
   GoalInputSchema,
   GoalPatchSchema,
@@ -9,12 +10,14 @@ import {
   SnapshotInputSchema,
 } from '@fg/contracts';
 import type { Db } from '@fg/db';
-import { assessReadiness, defaultConfig, rankProducts, type EngineConfig } from '@fg/engine';
+import { defaultConfig, type EngineConfig } from '@fg/engine';
 import { identify, type AuthOptions } from './auth.js';
-import { buildMonthlyPlan, monthStart } from './domain/plan.js';
-import { ApiError, badRequest, conflict, notFound } from './errors.js';
+import { ApiError, badRequest, notFound } from './errors.js';
 import * as repo from './repo.js';
-import { Router, type Ctx } from './router.js';
+import { Router } from './router.js';
+import { createServices } from './services.js';
+import { runTurn } from './chat/genio.js';
+import type { ChatModel } from './chat/model.js';
 
 export interface AppOptions {
   db: Db;
@@ -24,6 +27,8 @@ export interface AppOptions {
   /** Orígenes permitidos para CORS (la app web). */
   corsOrigins?: string[];
   maxBodyBytes?: number;
+  /** Modelo del Genio. Sin modelo, el chat responde 503. */
+  chatModel?: ChatModel;
 }
 
 function parse<S extends ZodTypeAny>(schema: S, value: unknown): z.output<S> {
@@ -43,22 +48,7 @@ export function createApp(opts: AppOptions) {
   const now = opts.now ?? (() => new Date());
   const router = new Router();
 
-  /** Meta + último snapshot + catálogo del tipo de la meta, o error claro si falta algo. */
-  async function goalContext(ctx: Ctx) {
-    const goal = await repo.getGoal(db, ctx.userId, ctx.params.id!);
-    if (!goal) throw notFound('La meta');
-    const snap = await repo.latestSnapshot(db, ctx.userId);
-    if (!snap) throw conflict('snapshot_required', 'Primero completa tu perfil financiero');
-    const cat = await repo.catalog(db, goal.type);
-    return { goal, snap, cat };
-  }
-
-  async function readinessFor(ctx: Ctx) {
-    const { goal, snap, cat } = await goalContext(ctx);
-    const readiness = assessReadiness(goal, snap.snapshot, cat.products, cfg);
-    const readinessId = await repo.saveReadiness(db, goal.id, snap.id, readiness);
-    return { goal, snap, cat, readiness, readinessId };
-  }
+  const svc = createServices(db, cfg, now);
 
   router
     // ---- Público ----
@@ -111,10 +101,10 @@ export function createApp(opts: AppOptions) {
 
     // ---- Metas ----
     .add('GET', '/v1/goals', async (ctx) => ({ body: { goals: await repo.listGoals(db, ctx.userId) } }))
-    .add('POST', '/v1/goals', async (ctx) => {
-      const id = await repo.createGoal(db, ctx.userId, parse(GoalInputSchema, ctx.body));
-      return { status: 201, body: await repo.getGoal(db, ctx.userId, id) };
-    })
+    .add('POST', '/v1/goals', async (ctx) => ({
+      status: 201,
+      body: await svc.createGoal(ctx.userId, parse(GoalInputSchema, ctx.body)),
+    }))
     .add('GET', '/v1/goals/:id', async (ctx) => {
       const g = await repo.getGoal(db, ctx.userId, ctx.params.id!);
       if (!g) throw notFound('La meta');
@@ -126,36 +116,41 @@ export function createApp(opts: AppOptions) {
       return { body: await repo.getGoal(db, ctx.userId, ctx.params.id!) };
     })
     .add('GET', '/v1/goals/:id/readiness', async (ctx) => {
-      const { readiness, snap } = await readinessFor(ctx);
+      const { readiness, snap } = await svc.readiness(ctx.userId, ctx.params.id!);
       return { body: { ...readiness, snapshotDate: snap.createdAt } };
     })
-    .add('GET', '/v1/goals/:id/recommendations', async (ctx) => {
-      const { goal, snap, cat, readiness } = await readinessFor(ctx);
-      const ranking = rankProducts(goal, snap.snapshot, cat, cfg);
-      await repo.saveRecommendations(db, goal.id, ranking);
-      return {
-        body: {
-          ...ranking,
-          readyToCompare: readiness.readyToCompare,
-          // Si aún no está listo, el top 3 se puede ver pero se marca así.
-          notice: readiness.readyToCompare ? null : 'Aún no recomendamos aplicar: revisa tus frenos y el plan del mes.',
-        },
-      };
-    })
+    .add('GET', '/v1/goals/:id/recommendations', async (ctx) => ({
+      body: await svc.recommendations(ctx.userId, ctx.params.id!),
+    }))
     .add('GET', '/v1/goals/:id/plan', async (ctx) => {
-      const goal = await repo.getGoal(db, ctx.userId, ctx.params.id!);
-      if (!goal) throw notFound('La meta');
-      const plan = await repo.getPlan(db, ctx.userId, goal.id, monthStart(now()));
+      const plan = await svc.plan(ctx.userId, ctx.params.id!);
       if (!plan) throw notFound('El plan de este mes');
       return { body: plan };
     })
     .add('POST', '/v1/goals/:id/plan', async (ctx) => {
-      const month = monthStart(now());
-      const existing = await repo.getPlan(db, ctx.userId, ctx.params.id!, month);
-      if (existing) return { body: existing };
-      const { goal, readiness, readinessId } = await readinessFor(ctx);
-      await repo.createPlan(db, goal.id, readinessId, buildMonthlyPlan(readiness, cfg, now()));
-      return { status: 201, body: await repo.getPlan(db, ctx.userId, goal.id, month) };
+      const { plan, created } = await svc.ensurePlan(ctx.userId, ctx.params.id!);
+      return { status: created ? 201 : 200, body: plan };
+    })
+    // ---- Chat del Genio ----
+    .add('POST', '/v1/chat', async (ctx) => {
+      if (!opts.chatModel) throw new ApiError(503, 'chat_unavailable', 'El Genio no está disponible en este momento');
+      const input = parse(ChatInputSchema, ctx.body);
+      let conversationId = input.conversationId;
+      if (conversationId && !(await repo.ownsConversation(db, ctx.userId, conversationId))) throw notFound('La conversación');
+      conversationId ??= await repo.createConversation(db, ctx.userId);
+      const history = (await repo.chatMessages(db, ctx.userId, conversationId, 20)).map((m) => ({ role: m.role, content: m.content }));
+      const turn = await runTurn({ model: opts.chatModel, svc, userId: ctx.userId, history, message: input.message, today: now() });
+      const messageId = await repo.addChatTurn(db, conversationId, input.message, turn.reply, {
+        attachments: turn.attachments,
+        trace: turn.trace,
+      });
+      return { body: { conversationId, messageId, reply: turn.reply, attachments: turn.attachments } };
+    })
+    .add('GET', '/v1/chat/conversations', async (ctx) => ({ body: { conversations: await repo.listConversations(db, ctx.userId) } }))
+    .add('GET', '/v1/chat/conversations/:id', async (ctx) => {
+      const id = ctx.params.id!;
+      if (!/^[0-9a-f-]{36}$/i.test(id) || !(await repo.ownsConversation(db, ctx.userId, id))) throw notFound('La conversación');
+      return { body: { id, messages: await repo.chatMessages(db, ctx.userId, id) } };
     })
     .add('PATCH', '/v1/actions/:id', async (ctx) => {
       const ok = await repo.patchAction(db, ctx.userId, ctx.params.id!, parse(ActionPatchSchema, ctx.body));
