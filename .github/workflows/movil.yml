@@ -1,0 +1,175 @@
+name: Móvil
+
+# Compila la app nativa, la abre en emulador/simulador contra la API real (PostgreSQL + datos demo),
+# recorre las pantallas con Maestro y publica las capturas en la rama `capturas-movil`.
+#   Android: en ramas movil-*, al cambiar la app en main, o a mano.
+#   iOS (macOS cuenta 10x minutos): solo a mano o con [ios] en el mensaje del commit.
+on:
+  push:
+    branches: ['movil-*', main]
+    paths: ['apps/app/**', 'packages/engine/**', 'packages/contracts/**', 'services/api/**', '.github/workflows/movil.yml']
+  workflow_dispatch:
+    inputs:
+      ios:
+        description: 'Compilar también iOS (macOS)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: movil-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DATABASE_URL: postgres://postgres:postgres@localhost:5432/fg
+  FG_DEV_USERS: '1'
+  FG_ALLOW_HTTP: '1'
+  # React Native y Gradle se llevan mejor con node_modules plano
+  npm_config_node_linker: hoisted
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: fg
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+      - name: Compilar paquetes
+        run: pnpm turbo run build --filter="./packages/*"
+      - name: API con datos demo
+        run: |
+          pnpm --filter @fg/db reset
+          nohup pnpm --filter @fg/api exec tsx src/main.ts > api.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf localhost:3000/v1/health && break; sleep 1; done
+          pnpm exec tsx services/api/scripts/datos-demo.ts
+      - name: Prebuild Android
+        working-directory: apps/app
+        env:
+          EXPO_PUBLIC_API_URL: http://10.0.2.2:3000
+        run: pnpm exec expo prebuild --platform android --no-install
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Compilar APK (release, x86_64 para el emulador)
+        working-directory: apps/app/android
+        env:
+          EXPO_PUBLIC_API_URL: http://10.0.2.2:3000
+        run: ./gradlew assembleRelease --no-daemon -PreactNativeArchitectures=x86_64
+      - name: Instalar Maestro
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Habilitar KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Emulador + recorrido con capturas
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_7
+          disable-animations: true
+          script: bash apps/app/.maestro/android.sh
+      - name: Guardar capturas y APK
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android
+          path: |
+            apps/app/capturas/
+            apps/app/android/app/build/outputs/apk/release/*.apk
+            api.log
+          if-no-files-found: warn
+      - name: Publicar capturas (rama capturas-movil)
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bash apps/app/.maestro/publicar-capturas.sh android
+
+  ios:
+    if: github.event_name == 'workflow_dispatch' && inputs.ios || contains(github.event.head_commit.message, '[ios]')
+    runs-on: macos-15
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: PostgreSQL 16
+        run: |
+          brew install postgresql@16
+          echo "$(brew --prefix postgresql@16)/bin" >> "$GITHUB_PATH"
+          brew services start postgresql@16
+      - name: Base de datos
+        run: |
+          for i in $(seq 1 30); do pg_isready && break; sleep 1; done
+          psql -d postgres -c "CREATE ROLE postgres WITH LOGIN SUPERUSER PASSWORD 'postgres'" || true
+          createdb -O postgres fg
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+      - name: Compilar paquetes
+        run: pnpm turbo run build --filter="./packages/*"
+      - name: API con datos demo
+        run: |
+          pnpm --filter @fg/db reset
+          nohup pnpm --filter @fg/api exec tsx src/main.ts > api.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf localhost:3000/v1/health && break; sleep 1; done
+          pnpm exec tsx services/api/scripts/datos-demo.ts
+      - name: Prebuild iOS
+        working-directory: apps/app
+        env:
+          EXPO_PUBLIC_API_URL: http://localhost:3000
+        run: pnpm exec expo prebuild --platform ios
+      - name: Compilar para simulador (release)
+        working-directory: apps/app/ios
+        env:
+          EXPO_PUBLIC_API_URL: http://localhost:3000
+        run: |
+          WS=$(ls -d *.xcworkspace | head -1); SCHEME="${WS%.xcworkspace}"
+          xcodebuild -workspace "$WS" -scheme "$SCHEME" -configuration Release -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' -derivedDataPath build CODE_SIGNING_ALLOWED=NO build | tail -20
+      - name: Instalar Maestro
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Simulador + recorrido con capturas
+        run: bash apps/app/.maestro/ios.sh
+      - name: Guardar capturas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios
+          path: |
+            apps/app/capturas/
+            api.log
+          if-no-files-found: warn
+      - name: Publicar capturas (rama capturas-movil)
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bash apps/app/.maestro/publicar-capturas.sh ios

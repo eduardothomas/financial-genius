@@ -6,10 +6,24 @@
     "version": "0.1.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
-    "ios": { "bundleIdentifier": "pa.financialgenius.app", "supportsTablet": true },
-    "android": { "package": "pa.financialgenius.app" },
-    "web": { "bundler": "metro", "output": "single", "name": "Financial Genius" },
-    "plugins": ["expo-router"],
-    "experiments": { "typedRoutes": false }
+    "ios": {
+      "bundleIdentifier": "pa.financialgenius.app",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "pa.financialgenius.app"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "name": "Financial Genius"
+    },
+    "plugins": [
+      "expo-router",
+      "./plugins/permitir-http.js"
+    ],
+    "experiments": {
+      "typedRoutes": false
+    }
   }
 }

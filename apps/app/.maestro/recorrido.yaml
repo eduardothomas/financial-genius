@@ -1,0 +1,51 @@
+# Recorrido de la app con datos demo (ver services/api/scripts/datos-demo.ts).
+# Toma capturas de cada pantalla. Corre igual en Android e iOS.
+appId: pa.financialgenius.app
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Entrar"
+    timeout: 60000
+- takeScreenshot: capturas/0-entrar
+- tapOn: "tu@correo.com"
+- inputText: "demo@ejemplo.test"
+- tapOn: "Entrar"
+- extendedWaitUntil:
+    visible: "Tus metas"
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "Comprar casa"
+    timeout: 30000
+- takeScreenshot: capturas/1-metas
+- tapOn: "Plan"
+- extendedWaitUntil:
+    visible: "Tu plan"
+    timeout: 20000
+- tapOn:
+    text: "Comprar casa"
+    index: 0
+- extendedWaitUntil:
+    visible: "Objetivo de.*"
+    timeout: 20000
+- takeScreenshot: capturas/2-plan
+- tapOn: "Productos"
+- extendedWaitUntil:
+    visible: "Mejores opciones"
+    timeout: 20000
+- extendedWaitUntil:
+    visible: "Por qué está aquí"
+    timeout: 30000
+- takeScreenshot: capturas/3-productos
+- tapOn: "Perfil"
+- waitForAnimationToEnd
+- takeScreenshot: capturas/4-perfil
+- tapOn: "Metas"
+- extendedWaitUntil:
+    visible: "Comprar casa"
+    timeout: 20000
+- tapOn: "Comprar casa"
+- extendedWaitUntil:
+    visible: "Lo que te frena"
+    timeout: 30000
+- takeScreenshot: capturas/5-meta-casa
