@@ -7,9 +7,30 @@
   "scripts": {
     "migrate": "for f in migrations/*.sql; do psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -q -f \"$f\" || exit 1; done",
     "seed": "psql \"$DATABASE_URL\" -q -v catalog=\"$(cat seed/catalog.sample.json)\" -f seed/seed.sql",
-    "test": "psql \"$DATABASE_URL\" -q -f test/db.test.sql && tsx test/e2e.engine.ts",
-    "reset": "psql \"$DATABASE_URL\" -q -c 'drop schema public cascade; create schema public;' && pnpm migrate && pnpm seed"
+    "test": "pnpm run reset && psql \"$DATABASE_URL\" -q -f test/db.test.sql && tsx test/e2e.engine.ts",
+    "reset": "psql \"$DATABASE_URL\" -q -c 'drop schema public cascade; create schema public;' && pnpm migrate && pnpm seed",
+    "build": "tsc -p tsconfig.json"
   },
-  "dependencies": { "@fg/engine": "workspace:*" },
-  "devDependencies": { "tsx": "^4.19.0", "@types/node": "^22.0.0" }
+  "dependencies": {
+    "@fg/engine": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./testing": {
+      "types": "./dist/testing.d.ts",
+      "import": "./dist/testing.js",
+      "default": "./dist/testing.js"
+    }
+  }
 }

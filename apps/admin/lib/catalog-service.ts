@@ -11,9 +11,8 @@ import {
   type ProductDraft,
 } from '@fg/catalog';
 
-export interface Db {
-  query<T = Record<string, unknown>>(sql: string, params?: unknown[]): Promise<{ rows: T[] }>;
-}
+import type { Db } from '@fg/db';
+export type { Db };
 
 export interface Deps {
   extractor: Extractor;

@@ -40,6 +40,8 @@ export interface EngineConfig {
   goals: Record<GoalType, GoalRecipe>;
   /** Misiones sugeridas por factor (plantillas en español de Panamá). */
   missionTemplates: Record<FactorId, string[]>;
+  /** Objetivo del mes cuando el freno principal es este factor. */
+  objectiveTemplates: Record<FactorId, string> & { ready: string };
 }
 
 // Escala de la tabla del spec: Bajo=1, Medio=2, Alto=3, Muy alto=4.
@@ -94,6 +96,16 @@ export const defaultConfig: EngineConfig = {
       defaultTermMonths: 360,
       rankingWeights: { cost: 0.45, eligibility: 0.25, benefits: 0.0, affordability: 0.3 },
     },
+  },
+  objectiveTemplates: {
+    income: 'Documentar todos tus ingresos comprobables',
+    dti: 'Bajar tus pagos de deuda frente a tu ingreso',
+    employment: 'Completar la antigüedad laboral que piden los bancos',
+    apc: 'Mejorar y verificar tu historial de crédito',
+    down_payment: 'Ahorrar para el abono',
+    utilization: 'Bajar el uso de tus tarjetas a menos del 30% del límite',
+    documents: 'Tener listos tus documentos para aplicar',
+    ready: 'Comparar las mejores opciones y elegir dónde aplicar',
   },
   missionTemplates: {
     income: [
