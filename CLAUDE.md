@@ -21,8 +21,10 @@ Lee docs/PRODUCT.md y docs/MVP.md antes de cualquier tarea.
 ## Estructura
 - `packages/engine` motor puro · `packages/catalog` captura con IA · `packages/contracts` esquemas zod API↔app
 - `packages/db` migraciones SQL, semilla, `Db` y utilidades de prueba (`@fg/db/testing`)
-- `services/api` API v1 (node:http; handlers independientes del framework) · `apps/admin` panel del catálogo (Next.js)
+- `services/api` API v1 (node:http; handlers independientes del framework; lógica en `src/services.ts`, compartida con las herramientas del chat en `src/chat/`) · `apps/admin` panel del catálogo (Next.js)
 - `apps/app` app Expo Router (Web/iOS/Android); lógica en `src/lib` con pruebas; tokens de diseño en `src/ui/theme.ts` (motivo: nivel de esclusa)
 - El CI publica la web de cada PR en la rama `vista-previa-web` (para revisión visual)
 - Las pruebas de API y admin reinician la BD de `DATABASE_URL`: usar siempre una BD desechable.
 - Dependencias: el CI instala con `--frozen-lockfile`. Para agregar o actualizar dependencias sin acceso a npm, sube una rama `actualizar-dependencias-*`: el workflow regenera `pnpm-lock.yaml` y alinea Expo en esa rama.
+- Auth: Supabase (código por correo); la API verifica con JWKS (`src/auth.ts`). Sin variables de Supabase, la app y la API usan `x-dev-user` (solo desarrollo). Ver `docs/SUPABASE_AUTH.md`.
+- Chat: el Genio solo obtiene datos por herramientas (`src/chat/tools.ts`) que reciben el userId de la sesión, nunca del modelo.
