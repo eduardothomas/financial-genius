@@ -8,8 +8,13 @@ xcrun simctl bootstatus "$UDID" -b
 APP=$(ls -d ios/build/Build/Products/Release-iphonesimulator/*.app | head -1)
 xcrun simctl install "$UDID" "$APP"
 mkdir -p capturas
+touch /tmp/inicio-recorrido
+export MAESTRO_DRIVER_STARTUP_TIMEOUT=240000
 status=0
 maestro --device "$UDID" test .maestro/recorrido.yaml --format junit --output capturas/maestro.xml || status=$?
-# Maestro guarda las capturas junto al flujo: se juntan en capturas/
-cp -R .maestro/capturas/. capturas/ 2>/dev/null || true
+# El driver de iOS a veces no arranca a tiempo en CI: un reintento
+if [ "$status" != "0" ] && [ ! -s capturas/maestro.xml ]; then status=0; maestro --device "$UDID" test .maestro/recorrido.yaml --format junit --output capturas/maestro.xml || status=$?; fi
+# Maestro guarda las capturas en su carpeta de salida: se juntan todas las nuevas en capturas/
+find "$PWD" "$HOME/.maestro" -type f -name '*.png' -newer /tmp/inicio-recorrido -not -path "$PWD/capturas/*" -exec cp {} capturas/ \; 2>/dev/null || true
+ls -la capturas
 if [ "$status" != "0" ]; then xcrun simctl io "$UDID" screenshot capturas/error.png; exit "$status"; fi
