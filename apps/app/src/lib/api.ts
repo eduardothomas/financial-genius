@@ -31,6 +31,33 @@ export interface PlanView {
   actions: Array<{ id: string; title: string; weekStart: string; status: 'pending' | 'done' | 'skipped'; factor: string | null; result: string | null }>;
 }
 
+/** Tarjetas que el Genio adjunta a sus respuestas (ver services/api/src/chat/tools.ts). */
+export type ChatAttachment =
+  | { type: 'readiness'; goalId: string; goalType: GoalType; score: number; ready: boolean }
+  | {
+      type: 'ranking';
+      goalId: string;
+      readyToCompare: boolean;
+      top: Array<{ position: number; productId: string; name: string; institutionName: string; estimatedMonthlyPayment: number | null }>;
+    }
+  | { type: 'plan'; goalId: string; objective: string; done: number; total: number }
+  | { type: 'goal'; goalId: string; goalType: GoalType; priority: number; targetAmount: number | null };
+
+export interface ChatMessageView {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  attachments: ChatAttachment[];
+  createdAt: string;
+}
+
+export interface ChatReply {
+  conversationId: string;
+  messageId: string;
+  reply: string;
+  attachments: ChatAttachment[];
+}
+
 export type RecommendationsView = RankingResult & { readyToCompare: boolean; notice: string | null };
 export type ReadinessView = ReadinessResult & { snapshotDate: string };
 
@@ -100,6 +127,15 @@ export function createApiClient(opts: ApiClientOptions) {
     recommendations: (id: string) => request<RecommendationsView>('GET', `/v1/goals/${encodeURIComponent(id)}/recommendations`),
     plan: (id: string) => maybe(request<PlanView>('GET', `/v1/goals/${encodeURIComponent(id)}/plan`)),
     createPlan: (id: string) => request<PlanView>('POST', `/v1/goals/${encodeURIComponent(id)}/plan`),
+    chat: (message: string, conversationId?: string) =>
+      request<ChatReply>('POST', '/v1/chat', conversationId ? { message, conversationId } : { message }),
+    conversations: () =>
+      request<{ conversations: Array<{ id: string; createdAt: string; lastMessageAt: string | null; preview: string | null }> }>(
+        'GET',
+        '/v1/chat/conversations',
+      ).then((r) => r.conversations),
+    conversation: (id: string) =>
+      request<{ id: string; messages: ChatMessageView[] }>('GET', `/v1/chat/conversations/${encodeURIComponent(id)}`).then((r) => r.messages),
     setAction: (id: string, status: PlanView['actions'][number]['status']) =>
       request<{ ok: true }>('PATCH', `/v1/actions/${encodeURIComponent(id)}`, { status }),
   };
