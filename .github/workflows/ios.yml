@@ -1,0 +1,29 @@
+name: iOS
+
+# App nativa de iOS (apps/ios, SwiftUI, iOS 26).
+#   núcleo: pruebas de FinancialGeniusCore en Linux (rápido y barato).
+#   app: compila en macOS 26 (Xcode 26), abre el simulador contra la API real con datos demo,
+#        recorre las pantallas con Maestro y publica las capturas en la rama capturas-movil (ios-nativo/).
+#        macOS cuenta 10x minutos: corre en ramas ios-*, en main y a mano.
+on:
+  push:
+    paths: ['apps/ios/**', '.github/workflows/ios.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  nucleo:
+    runs-on: ubuntu-latest
+    container: swift:6.2-noble
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pruebas del núcleo (Swift Testing)
+        working-directory: apps/ios/FinancialGeniusCore
+        run: swift test

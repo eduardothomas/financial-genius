@@ -1,0 +1,72 @@
+# Proyecto de Xcode generado con XcodeGen: `brew install xcodegen && xcodegen` (dentro de apps/ios).
+# El .xcodeproj no se versiona; este archivo es la fuente de verdad.
+name: FinancialGenius
+options:
+  bundleIdPrefix: pa.financialgenius
+  deploymentTarget:
+    iOS: "26.0"
+  developmentLanguage: es
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    # Configuración por entorno (se puede sobrescribir: xcodebuild FG_API_URL=https://...)
+    FG_API_URL: "http://localhost:3000"
+    FG_SUPABASE_URL: ""
+    FG_SUPABASE_ANON_KEY: ""
+targets:
+  FinancialGenius:
+    type: application
+    platform: iOS
+    sources:
+      - path: FinancialGenius
+    info:
+      path: FinancialGenius/Info.plist
+      properties:
+        CFBundleDisplayName: Financial Genius
+        CFBundleDevelopmentRegion: es
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen:
+          UIColorName: AccentColor
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UISupportedInterfaceOrientations~ipad:
+          [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        ITSAppUsesNonExemptEncryption: false
+        # Solo permite http hacia la red local (API de desarrollo); producción va por https
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        FGApiURL: $(FG_API_URL)
+        FGSupabaseURL: $(FG_SUPABASE_URL)
+        FGSupabaseAnonKey: $(FG_SUPABASE_ANON_KEY)
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: pa.financialgenius.app
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        ENABLE_PREVIEWS: YES
+  FinancialGeniusTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: FinancialGeniusTests
+    dependencies:
+      - target: FinancialGenius
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: pa.financialgenius.app.tests
+schemes:
+  FinancialGenius:
+    build:
+      targets:
+        FinancialGenius: all
+        FinancialGeniusTests: [test]
+    test:
+      targets: [FinancialGeniusTests]
+      gatherCoverageData: false
+    run:
+      config: Debug

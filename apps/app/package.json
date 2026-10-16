@@ -10,7 +10,8 @@
     "android": "expo start --android",
     "export:web": "expo export --platform web",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test test/*.test.ts"
+    "test": "tsx --test test/*.test.ts",
+    "casos-dorados": "tsx scripts/casos-dorados.ts"
   },
   "dependencies": {
     "@expo/metro-runtime": "~6.1.0",
