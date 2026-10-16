@@ -1,1 +1,1 @@
-ios-nativo: ios-nativo @ 50da7f5fd4b97a8ff968e1de21747dd68771ea1b (38849659079)
+ios-nativo: ios-nativo @ bf7f270b9b6981102b963d3d6bee6c47c5b2389a (38858284306)
