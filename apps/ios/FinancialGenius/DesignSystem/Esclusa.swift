@@ -47,12 +47,15 @@ struct CamaraEsclusa: View {
     var trazo: CGFloat = 3
     var radio: CGFloat = 16
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    /// La ola se mueve unos segundos después de cada cambio de nivel y luego se queda quieta
+    /// (ahorra batería y deja la pantalla en reposo para VoiceOver y las pruebas).
+    @State private var animando = true
 
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .bottom) {
                 RoundedRectangle(cornerRadius: radio).fill(Color.esclusa.opacity(0.08))
-                TimelineView(.animation(minimumInterval: 1 / 30, paused: reduceMotion)) { t in
+                TimelineView(.animation(minimumInterval: 1 / 30, paused: reduceMotion || !animando)) { t in
                     Ola(nivel: nivel, fase: reduceMotion ? 0 : t.date.timeIntervalSinceReferenceDate)
                         .fill(LinearGradient(colors: [Color.agua, Color.aguaProfunda], startPoint: .top, endPoint: .bottom))
                 }
@@ -64,6 +67,11 @@ struct CamaraEsclusa: View {
             }
             .clipShape(.rect(cornerRadius: radio))
             .overlay(RoundedRectangle(cornerRadius: radio).strokeBorder(Color.esclusa, lineWidth: trazo))
+        }
+        .task(id: nivel) {
+            animando = true
+            try? await Task.sleep(for: .seconds(3))
+            animando = false
         }
     }
 }
