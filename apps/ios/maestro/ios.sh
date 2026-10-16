@@ -22,10 +22,6 @@ maestro --device "$UDID" test maestro/recorrido.yaml --format junit --output cap
 # El driver de iOS a veces no arranca a tiempo en CI: un reintento
 if [ "$status" != "0" ] && [ ! -s capturas/maestro.xml ]; then status=0; maestro --device "$UDID" test maestro/recorrido.yaml --format junit --output capturas/maestro.xml || status=$?; fi
 find "$PWD" "$HOME/.maestro" -type f -name '*.png' -newer /tmp/inicio-recorrido -not -path "$PWD/capturas/*" -exec cp {} capturas/ \; 2>/dev/null || true
-# Modo oscuro: una captura extra de la pantalla actual
-xcrun simctl ui "$UDID" appearance dark || true
-sleep 2
-xcrun simctl io "$UDID" screenshot capturas/8-nueva-meta-oscuro.png || true
 ls -la capturas
 if [ "$status" != "0" ]; then
   xcrun simctl io "$UDID" screenshot capturas/error.png || true
