@@ -10,7 +10,7 @@ struct FinancialGeniusApp: App {
             Raiz()
                 .environment(sesion)
                 .environment(nav)
-                .tint(Color.esclusa)
+                .tint(Color.marca)
         }
     }
 }

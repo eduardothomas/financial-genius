@@ -17,7 +17,8 @@ financial-genius/
 │   ├── PRIVACY_LEGAL.md       ← sección 10
 │   └── ux-experiments/        ← los 7 .docx originales
 ├── apps/
-│   ├── app/                   ← Expo: Web + iOS + Android
+│   ├── app/                   ← Expo: Web + Android
+│   ├── ios/                   ← SwiftUI nativo (iOS 26, Liquid Glass)
 │   └── admin/                 ← Next.js: panel del catálogo
 ├── services/
 │   └── api/                   ← Fastify: módulos de la sección 9
@@ -40,8 +41,9 @@ Las reglas para Claude Code están en `CLAUDE.md`.
 - [x] `apps/admin` — panel del catálogo; lógica probada contra PostgreSQL (6 tests), pantallas Next.js sin ejecutar aún
 - [x] `services/api` — API v1: perfil, metas, preparación, top 3, plan y misiones, borrar cuenta (15 tests)
 - [x] `packages/contracts` — esquemas de entrada compartidos API ↔ app
-- [x] `apps/app` — app Expo: Metas, Plan, Productos y Perfil (sesión de desarrollo; 12 tests de lógica)
-- [ ] Chat
+- [x] `apps/app` — app Expo para Web y Android: Genio, Metas, Plan, Productos y Perfil
+- [x] `apps/ios` — app nativa SwiftUI para iOS 26 con Liquid Glass (mismas pantallas; textos verificados con casos dorados)
+- [x] Chat del Genio con herramientas y login con Supabase Auth
 
 ## Primeros pasos
 
@@ -55,7 +57,8 @@ pnpm test                        # todos los paquetes
 cp apps/admin/.env.example apps/admin/.env.local   # completa las claves
 pnpm --filter @fg/admin dev      # panel en http://localhost:3001
 pnpm --filter @fg/api dev        # API en http://localhost:3000
-pnpm --filter @fg/app web        # app en el navegador (también ios / android)
+pnpm --filter @fg/app web        # app en el navegador (también android)
+# iOS nativo: ver apps/ios/README.md (Xcode 26 + XcodeGen)
 ```
 
 > Las pruebas de `apps/admin` y `services/api` reinician la base de datos: úsalas con una BD desechable.

@@ -18,6 +18,8 @@ extension Color {
 
     /// Azul de esclusa: texto de marca, trazos.
     static let esclusa = Color(claro: 0x0E3B43, oscuro: 0x7FC8C9)
+    /// Color de acento de la app (botones, enlaces, interruptores): contrasta con blanco encima y sobre fondo oscuro.
+    static let marca = Color(claro: 0x0E3B43, oscuro: 0x2A8792)
     /// Relleno de marca con texto blanco encima.
     static let esclusaFuerte = Color(claro: 0x0E3B43, oscuro: 0x1F5C66)
     /// Mango: el nivel de preparación.

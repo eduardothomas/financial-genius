@@ -244,6 +244,7 @@ struct Campo: View {
                     .keyboardType(teclado)
                     .multilineTextAlignment(.trailing)
                     .monospacedDigit()
+                    .frame(maxWidth: 110)
                     .accessibilityLabel(titulo)
             }
             if let ayuda { Text(ayuda).font(.caption).foregroundStyle(.secondary) }

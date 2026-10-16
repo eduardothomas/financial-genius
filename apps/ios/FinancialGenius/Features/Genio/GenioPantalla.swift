@@ -41,7 +41,7 @@ struct GenioPantalla: View {
                     .animation(.snappy, value: enviando)
                 }
                 .scrollDismissesKeyboard(.interactively)
-                .defaultScrollAnchor(.bottom)
+                .defaultScrollAnchor(mensajes.isEmpty ? .top : .bottom)
                 .onChange(of: mensajes.count) { bajar(proxy) }
                 .onChange(of: enviando) { bajar(proxy) }
             }

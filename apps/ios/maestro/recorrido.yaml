@@ -63,6 +63,15 @@ appId: pa.financialgenius.app
 - waitForAnimationToEnd
 - takeScreenshot: capturas/6-perfil
 - tapOn: "Metas"
-- tapOn: "Agregar meta"
+# La pestaña Metas conserva el detalle abierto: se vuelve a la lista
+- tapOn:
+    id: "BackButton"
+    optional: true
+- extendedWaitUntil:
+    visible: "Tus metas"
+    timeout: 10000
+- tapOn:
+    text: "Agregar meta"
+    index: 0
 - waitForAnimationToEnd
 - takeScreenshot: capturas/7-nueva-meta
