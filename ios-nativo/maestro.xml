@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <testsuites>
-  <testsuite name="Test Suite" device="iPhone 17 Pro - iOS 26.4 - 0183276C-C5F7-4A53-B0AF-C3D9117595F6" tests="1" failures="0" time="323.716" timestamp="2026-10-16T06:19:33">
-    <testcase id="recorrido" name="recorrido" classname="recorrido" file="maestro/recorrido.yaml" time="323.626" timestamp="2026-10-16T06:19:33" status="SUCCESS"/>
+  <testsuite name="Test Suite" device="iPhone 17 Pro - iOS 26.4 - 0183276C-C5F7-4A53-B0AF-C3D9117595F6" tests="1" failures="0" time="247.16" timestamp="2026-10-16T06:56:58">
+    <testcase id="recorrido" name="recorrido" classname="recorrido" file="maestro/recorrido.yaml" time="245.924" timestamp="2026-10-16T06:56:59" status="SUCCESS"/>
   </testsuite>
 </testsuites>
