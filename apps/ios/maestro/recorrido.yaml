@@ -41,6 +41,11 @@ appId: pa.financialgenius.app
     timeout: 30000
 - waitForAnimationToEnd
 - takeScreenshot: capturas/4-plan
+# La barra de pestañas se minimiza al bajar; al subir vuelve a mostrarse
+- swipe:
+    direction: DOWN
+    duration: 500
+- waitForAnimationToEnd
 - tapOn: "Productos"
 - extendedWaitUntil:
     visible: "Por qué está aquí"

@@ -15,6 +15,10 @@ struct ProductosPantalla: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
+                    if let metas, metas.count >= 2 {
+                        SelectorDeMeta(metas: metas, seleccion: $sesion.metaId)
+                            .padding(.horizontal, -16)
+                    }
                     if let metas, metas.isEmpty {
                         ContentUnavailableView {
                             Label("Sin metas todavía", systemImage: "magnifyingglass")
@@ -42,9 +46,6 @@ struct ProductosPantalla: View {
                 .padding(.bottom, 24)
             }
             .overlay { if (metas == nil && error == nil) || (cargando && rec == nil) { ProgressView() } }
-            .safeAreaBar(edge: .top) {
-                if let metas { SelectorDeMeta(metas: metas, seleccion: $sesion.metaId) }
-            }
             .navigationTitle("Mejores opciones")
             .refreshable { await cargarTodo() }
             .task { await cargarMetas() }

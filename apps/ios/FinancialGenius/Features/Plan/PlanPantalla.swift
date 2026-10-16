@@ -21,6 +21,12 @@ struct PlanPantalla: View {
         @Bindable var sesion = sesion
         NavigationStack {
             List {
+                if let metas, metas.count >= 2 {
+                    SelectorDeMeta(metas: metas, seleccion: $sesion.metaId)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets(top: 0, leading: -4, bottom: 0, trailing: -4))
+                        .listRowSeparator(.hidden)
+                }
                 if let metas, metas.isEmpty {
                     ContentUnavailableView {
                         Label("Sin plan todavía", systemImage: "checklist")
@@ -42,9 +48,6 @@ struct PlanPantalla: View {
                 if let plan { contenido(plan) }
             }
             .overlay { if (metas == nil && error == nil) || (cargandoPlan && plan == nil) { ProgressView() } }
-            .safeAreaBar(edge: .top) {
-                if let metas { SelectorDeMeta(metas: metas, seleccion: $sesion.metaId) }
-            }
             .navigationTitle("Tu plan")
             .sensoryFeedback(trigger: hechas) { antes, ahora in ahora > antes ? .success : .selection }
             .refreshable { await cargarTodo() }
