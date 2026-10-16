@@ -19,10 +19,14 @@ final class FakeTransport: HTTPTransport, @unchecked Sendable {
         return _requests
     }
 
-    func send(_ request: URLRequest) async throws -> (Data, HTTPURLResponse) {
+    private func registrar(_ r: URLRequest) {
         lock.lock()
-        _requests.append(request)
+        _requests.append(r)
         lock.unlock()
+    }
+
+    func send(_ request: URLRequest) async throws -> (Data, HTTPURLResponse) {
+        registrar(request)
         let (status, body) = try handler(request)
         let res = HTTPURLResponse(url: request.url!, statusCode: status, httpVersion: nil, headerFields: nil)!
         return (Data(body.utf8), res)
