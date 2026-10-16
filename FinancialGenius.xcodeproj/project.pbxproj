@@ -1,0 +1,494 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03A78D8F165973709AFEE23B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7EB892CB4AB92C312CB0248 /* Assets.xcassets */; };
+		1C00A62C8924ABDA67B432F5 /* Tema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5670CB3B85F02202840A3021 /* Tema.swift */; };
+		44CB7AE60E77FCFB1B4DE5FB /* Esclusa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4293F681ED5DDDEF98F5D323 /* Esclusa.swift */; };
+		50BE130CD052764124EDCF56 /* PerfilPantalla.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5D5D27DB35FDA14735C061 /* PerfilPantalla.swift */; };
+		59620BFCA8EA545B26431D86 /* MetasPantalla.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D986097DE0DB57C3B7D168 /* MetasPantalla.swift */; };
+		749C042D2D57745C041F1E29 /* FinancialGeniusCore in Frameworks */ = {isa = PBXBuildFile; productRef = 352EEBDECAA986999B6C5E22 /* FinancialGeniusCore */; };
+		8866BE7A9525D0B6064A186F /* Sesion.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF376D834382500DCFF51994 /* Sesion.swift */; };
+		8B71EA9408F2273E6AA19D60 /* NuevaMetaPantalla.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538394AC6B38ABDBA412DF71 /* NuevaMetaPantalla.swift */; };
+		931239E544F24CAB0E858A82 /* FinancialGeniusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60832DC9C47FB1A5C569946 /* FinancialGeniusApp.swift */; };
+		A05223F2592521D6910BD4B4 /* ProductosPantalla.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4DAF8D412D524349BA7A9B /* ProductosPantalla.swift */; };
+		A8F0A7A9767CE13C68C25AA4 /* Configuracion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B472E9651908EC2AA8235AEF /* Configuracion.swift */; };
+		B76321AB889F6BF501C47599 /* GenioPantalla.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3E63B1730C86FE2B20E0E4 /* GenioPantalla.swift */; };
+		DA0B4C6EC6354692C1A5AC6C /* Llavero.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3407FE2924301902535C4E /* Llavero.swift */; };
+		E5AC8F9648ACD905AE1CAC1D /* PlanPantalla.swift in Sources */ = {isa = PBXBuildFile; fileRef = A040133CE6E8B269173198CF /* PlanPantalla.swift */; };
+		E97D88902B73E3DF71CE9CAD /* MetaDetallePantalla.swift in Sources */ = {isa = PBXBuildFile; fileRef = D380E909F596ED490CE93CE9 /* MetaDetallePantalla.swift */; };
+		F4188575CBB2382E879A381A /* EntrarPantalla.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0137613E98BB09AE04CFF2 /* EntrarPantalla.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2BDAEDFE3B5629B35E2D9CE2 /* FinancialGenius.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = FinancialGenius.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C0137613E98BB09AE04CFF2 /* EntrarPantalla.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntrarPantalla.swift; sourceTree = "<group>"; };
+		4293F681ED5DDDEF98F5D323 /* Esclusa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Esclusa.swift; sourceTree = "<group>"; };
+		538394AC6B38ABDBA412DF71 /* NuevaMetaPantalla.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NuevaMetaPantalla.swift; sourceTree = "<group>"; };
+		5670CB3B85F02202840A3021 /* Tema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tema.swift; sourceTree = "<group>"; };
+		5F5D5D27DB35FDA14735C061 /* PerfilPantalla.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfilPantalla.swift; sourceTree = "<group>"; };
+		66D986097DE0DB57C3B7D168 /* MetasPantalla.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetasPantalla.swift; sourceTree = "<group>"; };
+		8B3E63B1730C86FE2B20E0E4 /* GenioPantalla.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenioPantalla.swift; sourceTree = "<group>"; };
+		980C2F86B5C71C118F4A0010 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A040133CE6E8B269173198CF /* PlanPantalla.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanPantalla.swift; sourceTree = "<group>"; };
+		A7EB892CB4AB92C312CB0248 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B472E9651908EC2AA8235AEF /* Configuracion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuracion.swift; sourceTree = "<group>"; };
+		BF376D834382500DCFF51994 /* Sesion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sesion.swift; sourceTree = "<group>"; };
+		C60832DC9C47FB1A5C569946 /* FinancialGeniusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialGeniusApp.swift; sourceTree = "<group>"; };
+		CA4DAF8D412D524349BA7A9B /* ProductosPantalla.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductosPantalla.swift; sourceTree = "<group>"; };
+		D34AA99A73BEAAD7BD05D598 /* FinancialGeniusCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FinancialGeniusCore; path = FinancialGeniusCore; sourceTree = SOURCE_ROOT; };
+		D380E909F596ED490CE93CE9 /* MetaDetallePantalla.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDetallePantalla.swift; sourceTree = "<group>"; };
+		DD3407FE2924301902535C4E /* Llavero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Llavero.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B17B6D533B817542FD3AE3E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				749C042D2D57745C041F1E29 /* FinancialGeniusCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		02FE6E41CEF736AAF8098376 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				B472E9651908EC2AA8235AEF /* Configuracion.swift */,
+				DD3407FE2924301902535C4E /* Llavero.swift */,
+				BF376D834382500DCFF51994 /* Sesion.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		0F50D836F0DC41FE6A5A25E3 /* Genio */ = {
+			isa = PBXGroup;
+			children = (
+				8B3E63B1730C86FE2B20E0E4 /* GenioPantalla.swift */,
+			);
+			path = Genio;
+			sourceTree = "<group>";
+		};
+		19EC6EE5063AD20C53C02C53 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				C60832DC9C47FB1A5C569946 /* FinancialGeniusApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		3067DC015925C1EF07EACE09 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A7EB892CB4AB92C312CB0248 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		595F7832D5A63092809E67C7 = {
+			isa = PBXGroup;
+			children = (
+				AD5999D80B7A5846729A71FC /* FinancialGenius */,
+				E7481AAB39878DC4D9911450 /* Packages */,
+				82C6AB7987F738C5A05A4B00 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7AB3E394936B970170880D2E /* Entrar */ = {
+			isa = PBXGroup;
+			children = (
+				2C0137613E98BB09AE04CFF2 /* EntrarPantalla.swift */,
+			);
+			path = Entrar;
+			sourceTree = "<group>";
+		};
+		82C6AB7987F738C5A05A4B00 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2BDAEDFE3B5629B35E2D9CE2 /* FinancialGenius.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		939A5722F5B0CC3BE15E4881 /* Metas */ = {
+			isa = PBXGroup;
+			children = (
+				D380E909F596ED490CE93CE9 /* MetaDetallePantalla.swift */,
+				66D986097DE0DB57C3B7D168 /* MetasPantalla.swift */,
+				538394AC6B38ABDBA412DF71 /* NuevaMetaPantalla.swift */,
+			);
+			path = Metas;
+			sourceTree = "<group>";
+		};
+		A74A3F871EC65BFB89E66155 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				7AB3E394936B970170880D2E /* Entrar */,
+				0F50D836F0DC41FE6A5A25E3 /* Genio */,
+				939A5722F5B0CC3BE15E4881 /* Metas */,
+				E381E9AA0F5DBCEC1E429704 /* Perfil */,
+				C9648CA7D43620583421FFAB /* Plan */,
+				EBADC8400138DAD56F90EFEC /* Productos */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		AA15CB6AE78B0A9AF36B4858 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				4293F681ED5DDDEF98F5D323 /* Esclusa.swift */,
+				5670CB3B85F02202840A3021 /* Tema.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		AD5999D80B7A5846729A71FC /* FinancialGenius */ = {
+			isa = PBXGroup;
+			children = (
+				980C2F86B5C71C118F4A0010 /* Info.plist */,
+				19EC6EE5063AD20C53C02C53 /* App */,
+				02FE6E41CEF736AAF8098376 /* Core */,
+				AA15CB6AE78B0A9AF36B4858 /* DesignSystem */,
+				A74A3F871EC65BFB89E66155 /* Features */,
+				3067DC015925C1EF07EACE09 /* Resources */,
+			);
+			path = FinancialGenius;
+			sourceTree = "<group>";
+		};
+		C9648CA7D43620583421FFAB /* Plan */ = {
+			isa = PBXGroup;
+			children = (
+				A040133CE6E8B269173198CF /* PlanPantalla.swift */,
+			);
+			path = Plan;
+			sourceTree = "<group>";
+		};
+		E381E9AA0F5DBCEC1E429704 /* Perfil */ = {
+			isa = PBXGroup;
+			children = (
+				5F5D5D27DB35FDA14735C061 /* PerfilPantalla.swift */,
+			);
+			path = Perfil;
+			sourceTree = "<group>";
+		};
+		E7481AAB39878DC4D9911450 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				D34AA99A73BEAAD7BD05D598 /* FinancialGeniusCore */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		EBADC8400138DAD56F90EFEC /* Productos */ = {
+			isa = PBXGroup;
+			children = (
+				CA4DAF8D412D524349BA7A9B /* ProductosPantalla.swift */,
+			);
+			path = Productos;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FA3D69CD954C738F280DC539 /* FinancialGenius */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD5E8F8F449ABB4F58111232 /* Build configuration list for PBXNativeTarget "FinancialGenius" */;
+			buildPhases = (
+				39C05D82CD3AFB335698EF72 /* Sources */,
+				4F9E269DE4274E63C6CF8180 /* Resources */,
+				B17B6D533B817542FD3AE3E0 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FinancialGenius;
+			packageProductDependencies = (
+				352EEBDECAA986999B6C5E22 /* FinancialGeniusCore */,
+			);
+			productName = FinancialGenius;
+			productReference = 2BDAEDFE3B5629B35E2D9CE2 /* FinancialGenius.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EB69D6FF4654BE942527B9B3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 45B7431713BB853AE8D06E53 /* Build configuration list for PBXProject "FinancialGenius" */;
+			developmentRegion = es;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				es,
+			);
+			mainGroup = 595F7832D5A63092809E67C7;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				BF1F24D6D4E6651CCB7FF52F /* XCLocalSwiftPackageReference "FinancialGeniusCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 82C6AB7987F738C5A05A4B00 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FA3D69CD954C738F280DC539 /* FinancialGenius */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4F9E269DE4274E63C6CF8180 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03A78D8F165973709AFEE23B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		39C05D82CD3AFB335698EF72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8F0A7A9767CE13C68C25AA4 /* Configuracion.swift in Sources */,
+				F4188575CBB2382E879A381A /* EntrarPantalla.swift in Sources */,
+				44CB7AE60E77FCFB1B4DE5FB /* Esclusa.swift in Sources */,
+				931239E544F24CAB0E858A82 /* FinancialGeniusApp.swift in Sources */,
+				B76321AB889F6BF501C47599 /* GenioPantalla.swift in Sources */,
+				DA0B4C6EC6354692C1A5AC6C /* Llavero.swift in Sources */,
+				E97D88902B73E3DF71CE9CAD /* MetaDetallePantalla.swift in Sources */,
+				59620BFCA8EA545B26431D86 /* MetasPantalla.swift in Sources */,
+				8B71EA9408F2273E6AA19D60 /* NuevaMetaPantalla.swift in Sources */,
+				50BE130CD052764124EDCF56 /* PerfilPantalla.swift in Sources */,
+				E5AC8F9648ACD905AE1CAC1D /* PlanPantalla.swift in Sources */,
+				A05223F2592521D6910BD4B4 /* ProductosPantalla.swift in Sources */,
+				8866BE7A9525D0B6064A186F /* Sesion.swift in Sources */,
+				1C00A62C8924ABDA67B432F5 /* Tema.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2A4F14F3B65D18BC15627CFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FinancialGenius/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = pa.financialgenius.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5E17648BF4922241B3F5A487 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FinancialGenius/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = pa.financialgenius.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		799E15D4BC2B69CAAE089156 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				FG_API_URL = "http://localhost:3000";
+				FG_SUPABASE_ANON_KEY = "";
+				FG_SUPABASE_URL = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		861CBFE11476C60D98D4E8EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FG_API_URL = "http://localhost:3000";
+				FG_SUPABASE_ANON_KEY = "";
+				FG_SUPABASE_URL = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		45B7431713BB853AE8D06E53 /* Build configuration list for PBXProject "FinancialGenius" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				799E15D4BC2B69CAAE089156 /* Debug */,
+				861CBFE11476C60D98D4E8EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DD5E8F8F449ABB4F58111232 /* Build configuration list for PBXNativeTarget "FinancialGenius" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A4F14F3B65D18BC15627CFB /* Debug */,
+				5E17648BF4922241B3F5A487 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		BF1F24D6D4E6651CCB7FF52F /* XCLocalSwiftPackageReference "FinancialGeniusCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = FinancialGeniusCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		352EEBDECAA986999B6C5E22 /* FinancialGeniusCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FinancialGeniusCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = EB69D6FF4654BE942527B9B3 /* Project object */;
+}
