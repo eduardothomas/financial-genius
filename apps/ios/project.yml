@@ -42,6 +42,7 @@ targets:
           [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
         ITSAppUsesNonExemptEncryption: false
         # Solo permite http hacia la red local (API de desarrollo); producción va por https
+        NSLocalNetworkUsageDescription: Para conectarse a la API de desarrollo en tu red local.
         NSAppTransportSecurity:
           NSAllowsLocalNetworking: true
         FGApiURL: $(FG_API_URL)
