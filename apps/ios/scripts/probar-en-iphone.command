@@ -11,7 +11,9 @@ echo "== Financial Genius: API local para el iPhone =="
 command -v brew >/dev/null || { echo "Falta Homebrew: https://brew.sh"; read -r; exit 1; }
 command -v node >/dev/null || brew install node@22
 command -v node >/dev/null || export PATH="$(brew --prefix node@22)/bin:$PATH"
-command -v pnpm >/dev/null || corepack enable pnpm || npm install -g pnpm
+# pnpm con Homebrew (sin sudo ni npm global)
+command -v pnpm >/dev/null || brew install pnpm
+[ "$(id -u)" = "0" ] && { echo "No uses sudo: corre el script con tu usuario."; exit 1; }
 if ! command -v psql >/dev/null; then
   brew install postgresql@16
 fi
