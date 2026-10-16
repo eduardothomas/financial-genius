@@ -27,3 +27,77 @@ jobs:
       - name: Pruebas del núcleo (Swift Testing)
         working-directory: apps/ios/FinancialGeniusCore
         run: bash ../scripts/anotar-errores.sh "swift test" swift test
+
+  app:
+    if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/ios-')
+    runs-on: macos-26
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - name: Xcode 26
+        run: |
+          XC=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1 || true)
+          [ -n "$XC" ] && sudo xcode-select -s "$XC"
+          xcodebuild -version
+          xcrun simctl list runtimes | grep -i ios
+      - name: XcodeGen
+        working-directory: apps/ios
+        run: |
+          brew install xcodegen
+          xcodegen generate
+      - name: Compilar para simulador
+        working-directory: apps/ios
+        run: |
+          bash scripts/anotar-errores.sh "xcodebuild" \
+            xcodebuild -project FinancialGenius.xcodeproj -scheme FinancialGenius -configuration Debug \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO build -quiet
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: PostgreSQL 16
+        run: |
+          brew install postgresql@16
+          echo "$(brew --prefix postgresql@16)/bin" >> "$GITHUB_PATH"
+          brew services start postgresql@16
+      - name: Base de datos
+        run: |
+          for i in $(seq 1 30); do pg_isready && break; sleep 1; done
+          psql -d postgres -c "CREATE ROLE postgres WITH LOGIN SUPERUSER PASSWORD 'postgres'" || true
+          createdb -O postgres fg
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+      - name: Compilar paquetes
+        run: pnpm turbo run build --filter="./packages/*"
+      - name: API con datos demo
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/fg
+          FG_DEV_USERS: '1'
+          FG_ALLOW_HTTP: '1'
+        run: |
+          pnpm --filter @fg/db reset
+          nohup pnpm --filter @fg/api exec tsx src/main.ts > api.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf localhost:3000/v1/health && break; sleep 1; done
+          pnpm exec tsx services/api/scripts/datos-demo.ts
+      - name: Instalar Maestro
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Simulador + recorrido con capturas
+        run: bash apps/ios/maestro/ios.sh
+      - name: Guardar capturas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-nativo
+          path: |
+            apps/ios/capturas/
+            api.log
+          if-no-files-found: warn
+      - name: Publicar capturas (rama capturas-movil)
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bash apps/ios/scripts/publicar-capturas.sh

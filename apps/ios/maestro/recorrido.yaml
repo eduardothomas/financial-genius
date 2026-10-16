@@ -1,0 +1,63 @@
+# Recorrido de la app nativa con datos demo (services/api/scripts/datos-demo.ts): toma capturas de cada pantalla.
+appId: pa.financialgenius.app
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Tu genio financiero"
+    timeout: 60000
+- takeScreenshot: capturas/0-entrar
+- tapOn:
+    id: "correo"
+- inputText: "demo@ejemplo.test"
+- tapOn: "Entrar"
+# En CI no hay ANTHROPIC_API_KEY: se ve la bienvenida y las sugerencias
+- extendedWaitUntil:
+    visible: "Tu Genio"
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: capturas/1-genio
+- tapOn: "Metas"
+- extendedWaitUntil:
+    visible:
+      id: "meta-mortgage"
+    timeout: 30000
+- takeScreenshot: capturas/2-metas
+- tapOn:
+    id: "meta-mortgage"
+- extendedWaitUntil:
+    visible: "Lo que te frena"
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: capturas/3-meta-casa
+- scroll
+- takeScreenshot: capturas/3b-meta-casa-frenos
+- scrollUntilVisible:
+    element: "Ver mi plan del mes"
+    direction: UP
+- tapOn: "Ver mi plan del mes"
+- extendedWaitUntil:
+    visible: "Objetivo de.*"
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: capturas/4-plan
+- tapOn: "Productos"
+- extendedWaitUntil:
+    visible: "Por qué está aquí"
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: capturas/5-productos
+- tapOn:
+    id: "meta-chip-auto_loan"
+- extendedWaitUntil:
+    visible: "Por qué está aquí"
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: capturas/5b-productos-auto
+- tapOn: "Perfil"
+- waitForAnimationToEnd
+- takeScreenshot: capturas/6-perfil
+- tapOn: "Metas"
+- tapOn: "Agregar meta"
+- waitForAnimationToEnd
+- takeScreenshot: capturas/7-nueva-meta
