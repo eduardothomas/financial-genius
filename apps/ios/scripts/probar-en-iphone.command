@@ -4,6 +4,7 @@
 # Hace: PostgreSQL + API con datos demo (usuario demo@ejemplo.test) y apunta el proyecto de Xcode a esta Mac.
 # OJO: reinicia la base de datos local "fg" (datos de prueba).
 set -euo pipefail
+[ "$(id -u)" = "0" ] && { echo "No uses sudo: corre el script con tu usuario."; exit 1; }
 cd "$(dirname "$0")/../../.."
 RAIZ="$PWD"
 echo "== Financial Genius: API local para el iPhone =="
@@ -13,7 +14,6 @@ command -v node >/dev/null || brew install node@22
 command -v node >/dev/null || export PATH="$(brew --prefix node@22)/bin:$PATH"
 # pnpm con Homebrew (sin sudo ni npm global)
 command -v pnpm >/dev/null || brew install pnpm
-[ "$(id -u)" = "0" ] && { echo "No uses sudo: corre el script con tu usuario."; exit 1; }
 if ! command -v psql >/dev/null; then
   brew install postgresql@16
 fi
