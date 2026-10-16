@@ -1,8 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <testsuites>
-  <testsuite name="Test Suite" device="iPhone 17 Pro - iOS 26.4 - 0183276C-C5F7-4A53-B0AF-C3D9117595F6" tests="1" failures="1" time="241.031" timestamp="2026-10-16T03:54:16">
-    <testcase id="recorrido" name="recorrido" classname="recorrido" file="maestro/recorrido.yaml" time="240.932" timestamp="2026-10-16T03:54:16" status="ERROR">
-      <failure>Element not found: Text matching regex: Agregar meta</failure>
-    </testcase>
+  <testsuite name="Test Suite" device="iPhone 17 Pro - iOS 26.4 - 0183276C-C5F7-4A53-B0AF-C3D9117595F6" tests="1" failures="0" time="200.419" timestamp="2026-10-16T04:08:33">
+    <testcase id="recorrido" name="recorrido" classname="recorrido" file="maestro/recorrido.yaml" time="200.266" timestamp="2026-10-16T04:08:33" status="SUCCESS"/>
   </testsuite>
 </testsuites>
