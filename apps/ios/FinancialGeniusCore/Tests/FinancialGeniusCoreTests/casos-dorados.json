@@ -1,0 +1,677 @@
+{
+  "_nota": "Generado por apps/app/scripts/casos-dorados.ts. No editar a mano.",
+  "money": [
+    {
+      "n": 0,
+      "decimals": 0,
+      "out": "B/. 0"
+    },
+    {
+      "n": 7,
+      "decimals": 0,
+      "out": "B/. 7"
+    },
+    {
+      "n": 389.03,
+      "decimals": 0,
+      "out": "B/. 389"
+    },
+    {
+      "n": 389.5,
+      "decimals": 0,
+      "out": "B/. 390"
+    },
+    {
+      "n": 388.5,
+      "decimals": 0,
+      "out": "B/. 389"
+    },
+    {
+      "n": 1000,
+      "decimals": 0,
+      "out": "B/. 1,000"
+    },
+    {
+      "n": 22500,
+      "decimals": 0,
+      "out": "B/. 22,500"
+    },
+    {
+      "n": 1234567.89,
+      "decimals": 0,
+      "out": "B/. 1,234,568"
+    },
+    {
+      "n": -1500,
+      "decimals": 0,
+      "out": "-B/. 1,500"
+    },
+    {
+      "n": 389.03,
+      "decimals": 2,
+      "out": "B/. 389.03"
+    },
+    {
+      "n": 1250.5,
+      "decimals": 2,
+      "out": "B/. 1,250.50"
+    },
+    {
+      "n": 0.005,
+      "decimals": 2,
+      "out": "B/. 0.01"
+    },
+    {
+      "n": 1.005,
+      "decimals": 2,
+      "out": "B/. 1.00"
+    },
+    {
+      "n": 999.999,
+      "decimals": 2,
+      "out": "B/. 1,000.00"
+    },
+    {
+      "n": -12.3,
+      "decimals": 2,
+      "out": "-B/. 12.30"
+    }
+  ],
+  "pct": [
+    {
+      "n": 46.6,
+      "decimals": 0,
+      "out": "47%"
+    },
+    {
+      "n": 30,
+      "decimals": 0,
+      "out": "30%"
+    },
+    {
+      "n": 7.25,
+      "decimals": 1,
+      "out": "7.3%"
+    },
+    {
+      "n": 60.04,
+      "decimals": 1,
+      "out": "60%"
+    },
+    {
+      "n": 0.5,
+      "decimals": 0,
+      "out": "1%"
+    },
+    {
+      "n": 12.345,
+      "decimals": 2,
+      "out": "12.35%"
+    }
+  ],
+  "goalLabel": {
+    "credit_card": "Tarjeta de crédito",
+    "auto_loan": "Préstamo de auto",
+    "mortgage": "Comprar casa"
+  },
+  "goalHint": {
+    "credit_card": "Tu primera tarjeta o una mejor que la que tienes",
+    "auto_loan": "Financiar un carro nuevo o usado",
+    "mortgage": "Hipoteca para tu vivienda"
+  },
+  "factorLabel": {
+    "income": "Ingreso",
+    "dti": "Deudas frente a tu ingreso",
+    "employment": "Antigüedad laboral",
+    "apc": "Historial de crédito",
+    "down_payment": "Abono ahorrado",
+    "utilization": "Uso de tus tarjetas",
+    "documents": "Documentos"
+  },
+  "benefitLabel": [
+    {
+      "in": "cashback",
+      "out": "reembolso en efectivo"
+    },
+    {
+      "in": "miles",
+      "out": "millas"
+    },
+    {
+      "in": "points",
+      "out": "puntos"
+    },
+    {
+      "in": "lounge",
+      "out": "salas VIP"
+    },
+    {
+      "in": "insurance_included",
+      "out": "seguro incluido"
+    },
+    {
+      "in": "discounts",
+      "out": "descuentos"
+    },
+    {
+      "in": "secured",
+      "out": "tarjeta asegurada"
+    },
+    {
+      "in": "otro",
+      "out": "otro"
+    }
+  ],
+  "reasonText": [
+    {
+      "reason": {
+        "code": "lowest_cost",
+        "params": {
+          "compared": 3
+        }
+      },
+      "out": "El costo más bajo de 3 opciones que calificas"
+    },
+    {
+      "reason": {
+        "code": "low_cost",
+        "params": {
+          "compared": 3
+        }
+      },
+      "out": "De las más baratas para tu caso"
+    },
+    {
+      "reason": {
+        "code": "no_annual_fee",
+        "params": {}
+      },
+      "out": "Sin anualidad"
+    },
+    {
+      "reason": {
+        "code": "matches_preferences",
+        "params": {
+          "benefits": "cashback,miles"
+        }
+      },
+      "out": "Tiene lo que buscas: reembolso en efectivo, millas"
+    },
+    {
+      "reason": {
+        "code": "matches_preferences",
+        "params": {
+          "benefits": "otro"
+        }
+      },
+      "out": "Tiene lo que buscas: otro"
+    },
+    {
+      "reason": {
+        "code": "affordable_payment",
+        "params": {
+          "payment": 389.03,
+          "capacity": 940
+        }
+      },
+      "out": "Cuota estimada de B/. 389, cómoda para tu capacidad de B/. 940"
+    },
+    {
+      "reason": {
+        "code": "tight_payment",
+        "params": {
+          "payment": 912.44,
+          "capacity": 940
+        }
+      },
+      "out": "Cuota estimada de B/. 912: queda justa frente a tu capacidad de B/. 940"
+    },
+    {
+      "reason": {
+        "code": "comfortable_requirements",
+        "params": {
+          "minIncome": 1500
+        }
+      },
+      "out": "Cumples con holgura el ingreso mínimo de B/. 1,500"
+    },
+    {
+      "reason": {
+        "code": "tight_requirements",
+        "params": {
+          "minIncome": 1200
+        }
+      },
+      "out": "Cumples justo el ingreso mínimo de B/. 1,200"
+    },
+    {
+      "reason": {
+        "code": "higher_down_payment",
+        "params": {
+          "pct": 15,
+          "lowest": 10
+        }
+      },
+      "out": "Pide 15% de abono (otras opciones piden 10%): cuota más baja, pero necesitas más ahorro"
+    }
+  ],
+  "obstacleDetail": [
+    {
+      "factor": "income",
+      "evidence": {
+        "income": 1100,
+        "marketMin": 600,
+        "ratio": 1.83
+      },
+      "out": "Ganas B/. 1,100 y el mínimo más bajo del mercado es B/. 600."
+    },
+    {
+      "factor": "income",
+      "evidence": {
+        "income": 1100,
+        "marketMin": null
+      },
+      "out": "Aún no hay suficientes productos para comparar tu ingreso."
+    },
+    {
+      "factor": "dti",
+      "evidence": {
+        "dti": 0.466,
+        "estimatedNewPayment": 912.44,
+        "dtiGood": 0.3,
+        "dtiMax": 0.45
+      },
+      "out": "Con la nueva cuota, tus deudas serían el 47% de tu ingreso. Lo ideal es hasta 30%."
+    },
+    {
+      "factor": "dti",
+      "evidence": {
+        "dti": null,
+        "estimatedNewPayment": 0,
+        "dtiGood": 0.3,
+        "dtiMax": 0.45
+      },
+      "out": "No pudimos calcular tus deudas frente a tu ingreso."
+    },
+    {
+      "factor": "employment",
+      "evidence": {
+        "months": 14,
+        "target": 24
+      },
+      "out": "Llevas 14 meses en tu empleo; los bancos suelen pedir 24."
+    },
+    {
+      "factor": "apc",
+      "evidence": {
+        "selfReported": "good"
+      },
+      "out": "Dices que tu historial es bueno."
+    },
+    {
+      "factor": "apc",
+      "evidence": {
+        "selfReported": "fair"
+      },
+      "out": "Dices que tu historial tiene algunos atrasos."
+    },
+    {
+      "factor": "apc",
+      "evidence": {
+        "selfReported": "poor"
+      },
+      "out": "Dices que tu historial tiene problemas."
+    },
+    {
+      "factor": "apc",
+      "evidence": {
+        "selfReported": "none"
+      },
+      "out": "Dices que aún no tienes historial de crédito."
+    },
+    {
+      "factor": "apc",
+      "evidence": {
+        "selfReported": "unknown"
+      },
+      "out": "No sabemos cómo está tu historial de crédito."
+    },
+    {
+      "factor": "down_payment",
+      "evidence": {
+        "required": 7500,
+        "saved": 4000,
+        "pct": 5
+      },
+      "out": "Tienes B/. 4,000 de B/. 7,500 de abono (5%)."
+    },
+    {
+      "factor": "down_payment",
+      "evidence": {
+        "required": null,
+        "saved": 800
+      },
+      "out": "Indica el monto de tu meta para calcular el abono."
+    },
+    {
+      "factor": "utilization",
+      "evidence": {
+        "utilization": 0.6,
+        "good": 0.3
+      },
+      "out": "Usas el 60% del límite de tus tarjetas. Lo ideal es menos de 30%."
+    },
+    {
+      "factor": "utilization",
+      "evidence": {
+        "utilization": null
+      },
+      "out": "No tienes tarjetas registradas."
+    },
+    {
+      "factor": "documents",
+      "evidence": {
+        "ready": 2,
+        "total": 3
+      },
+      "out": "Tienes 2 de 3 documentos listos."
+    }
+  ],
+  "levelLabel": [
+    {
+      "score": 95,
+      "ready": true,
+      "out": "Listo para comparar"
+    },
+    {
+      "score": 72,
+      "ready": false,
+      "out": "Casi listo"
+    },
+    {
+      "score": 65.1,
+      "ready": false,
+      "out": "En camino"
+    },
+    {
+      "score": 40,
+      "ready": false,
+      "out": "En camino"
+    },
+    {
+      "score": 39.9,
+      "ready": false,
+      "out": "Empezando"
+    },
+    {
+      "score": 0,
+      "ready": false,
+      "out": "Empezando"
+    }
+  ],
+  "weekLabel": [
+    {
+      "in": "2026-10-12",
+      "out": "semana del 12 de octubre"
+    },
+    {
+      "in": "2026-01-05",
+      "out": "semana del 5 de enero"
+    },
+    {
+      "in": "2026-12-28",
+      "out": "semana del 28 de diciembre"
+    }
+  ],
+  "monthLabel": [
+    {
+      "in": "2026-10-01",
+      "out": "octubre"
+    },
+    {
+      "in": "2026-01-01",
+      "out": "enero"
+    },
+    {
+      "in": "2026-12-01",
+      "out": "diciembre"
+    }
+  ],
+  "parseAmount": [
+    {
+      "in": "1,250.50",
+      "out": 1250.5
+    },
+    {
+      "in": "B/. 900",
+      "out": 900
+    },
+    {
+      "in": "b/.900",
+      "out": 900
+    },
+    {
+      "in": "$1,000",
+      "out": 1000
+    },
+    {
+      "in": " 750 ",
+      "out": 750
+    },
+    {
+      "in": "",
+      "out": null
+    },
+    {
+      "in": "abc",
+      "out": null
+    },
+    {
+      "in": "-5",
+      "out": null
+    },
+    {
+      "in": "0",
+      "out": 0
+    }
+  ],
+  "suggestions": [
+    {
+      "goals": [],
+      "hasProfile": false,
+      "out": [
+        "Quiero mi primera tarjeta de crédito",
+        "Quiero comprar un carro",
+        "Quiero comprar una casa"
+      ]
+    },
+    {
+      "goals": [
+        {
+          "type": "auto_loan",
+          "priority": 2
+        },
+        {
+          "type": "mortgage",
+          "priority": 1
+        }
+      ],
+      "hasProfile": true,
+      "out": [
+        "¿Estoy listo para comprar casa?",
+        "¿Qué hago esta semana?",
+        "¿Cuáles son mis mejores opciones de comprar casa?"
+      ]
+    },
+    {
+      "goals": [
+        {
+          "type": "credit_card",
+          "priority": 1
+        }
+      ],
+      "hasProfile": false,
+      "out": [
+        "¿Estoy listo para una tarjeta?",
+        "¿Qué hago esta semana?",
+        "¿Qué datos necesitas de mí?"
+      ]
+    },
+    {
+      "goals": [
+        {
+          "type": "auto_loan",
+          "priority": 1
+        }
+      ],
+      "hasProfile": true,
+      "out": [
+        "¿Estoy listo para el préstamo de auto?",
+        "¿Qué hago esta semana?",
+        "¿Cuáles son mis mejores opciones de préstamo de auto?"
+      ]
+    }
+  ],
+  "attachmentCard": [
+    {
+      "attachment": {
+        "type": "readiness",
+        "goalId": "g1",
+        "goalType": "mortgage",
+        "score": 65.1,
+        "ready": false
+      },
+      "out": {
+        "title": "Comprar casa: 65 de 100",
+        "detail": "Aún no: mira tus frenos",
+        "href": "/meta/g1",
+        "goalId": "g1"
+      }
+    },
+    {
+      "attachment": {
+        "type": "readiness",
+        "goalId": "g2",
+        "goalType": "auto_loan",
+        "score": 91.2,
+        "ready": true
+      },
+      "out": {
+        "title": "Préstamo de auto: 91 de 100",
+        "detail": "Listo para comparar opciones",
+        "href": "/meta/g2",
+        "goalId": "g2"
+      }
+    },
+    {
+      "attachment": {
+        "type": "ranking",
+        "goalId": "g2",
+        "readyToCompare": true,
+        "top": [
+          {
+            "position": 1,
+            "productId": "alfa-auto",
+            "name": "Alfa Auto Nuevo",
+            "institutionName": "Banco Alfa",
+            "estimatedMonthlyPayment": 389.03
+          },
+          {
+            "position": 2,
+            "productId": "beta-auto",
+            "name": "Beta Autos",
+            "institutionName": "Banco Beta",
+            "estimatedMonthlyPayment": 372.58
+          }
+        ]
+      },
+      "out": {
+        "title": "#1 Alfa Auto Nuevo",
+        "detail": "Banco Alfa · B/. 389 al mes aprox. · ver las 2",
+        "href": "/productos",
+        "goalId": "g2"
+      }
+    },
+    {
+      "attachment": {
+        "type": "ranking",
+        "goalId": "g3",
+        "readyToCompare": false,
+        "top": [
+          {
+            "position": 1,
+            "productId": "c",
+            "name": "Alfa Clásica",
+            "institutionName": "Banco Alfa",
+            "estimatedMonthlyPayment": null
+          }
+        ]
+      },
+      "out": {
+        "title": "#1 Alfa Clásica",
+        "detail": "Banco Alfa · ver las 1",
+        "href": "/productos",
+        "goalId": "g3"
+      }
+    },
+    {
+      "attachment": {
+        "type": "ranking",
+        "goalId": "g4",
+        "readyToCompare": false,
+        "top": []
+      },
+      "out": {
+        "title": "Sin opciones por ahora",
+        "detail": "Hoy no cumples los requisitos públicos de ningún producto",
+        "href": "/productos",
+        "goalId": "g4"
+      }
+    },
+    {
+      "attachment": {
+        "type": "plan",
+        "goalId": "g1",
+        "objective": "Bajar tus pagos de deuda frente a tu ingreso",
+        "done": 1,
+        "total": 5
+      },
+      "out": {
+        "title": "Bajar tus pagos de deuda frente a tu ingreso",
+        "detail": "Plan del mes: 1 de 5 misiones hechas",
+        "href": "/plan",
+        "goalId": "g1"
+      }
+    },
+    {
+      "attachment": {
+        "type": "goal",
+        "goalId": "g9",
+        "goalType": "mortgage",
+        "priority": 2,
+        "targetAmount": 150000
+      },
+      "out": {
+        "title": "Nueva meta: Comprar casa",
+        "detail": "Prioridad 2 · B/. 150,000",
+        "href": "/meta/g9",
+        "goalId": "g9"
+      }
+    },
+    {
+      "attachment": {
+        "type": "goal",
+        "goalId": "g8",
+        "goalType": "credit_card",
+        "priority": 1,
+        "targetAmount": null
+      },
+      "out": {
+        "title": "Nueva meta: Tarjeta de crédito",
+        "detail": "Prioridad 1",
+        "href": "/meta/g8",
+        "goalId": "g8"
+      }
+    }
+  ]
+}

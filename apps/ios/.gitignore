@@ -1,0 +1,7 @@
+*.xcodeproj
+FinancialGenius/Info.plist
+build/
+.build/
+.swiftpm/
+DerivedData/
+capturas/
